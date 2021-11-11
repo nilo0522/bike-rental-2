@@ -1,3 +1,4 @@
+
 <!-- UNDER REPAIR-->
 <!-- UNDER REPAIR-->
 <!-- UNDER REPAIR-->
@@ -15,6 +16,7 @@
 <!-- UNDER REPAIR-->
 
 <style>
+
 body {
   width: 500px;
   margin: 0 auto;
@@ -76,14 +78,23 @@ button {
 button:hover {
   border: 2px solid black;
 }
+
+
+/**CALENDAR */
+
+
+
+
   </style>
 
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   
-         
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="src/mini-event-calendar.min.css">    
+
+
+
            <h3 class="text-center"> 
           &nbsp; &nbsp; &nbsp;
           &nbsp; &nbsp; &nbsp; 
@@ -128,12 +139,16 @@ button:hover {
             <div class="col-md-12"><strong>End Date:</strong></div>
                 <div class="col-md-12"><input  name="rent_end_date" id="rent_end_date" class="form-control"  required  autocomplete="off"/></div>
             </div>
-          
+
+
            
             <div class="elem-group">
                 <label for="pickup">Pick up Address</label>
                 <input id="pickup" name="pickup" placeholder="Set your Pick Up Address." required/>
             </div>
+
+           
+
 
 
             @foreach($bike_details as $bike)
@@ -151,7 +166,7 @@ button:hover {
           &nbsp; &nbsp; &nbsp;
           &nbsp; &nbsp; &nbsp;
           
-          <img class="img-responsive mx-auto d-block" src="../uploads/{{$bike->bikepic}}" />
+          <img class="img-responsive mx-auto d-block" style="height:200px; width:250px" src="../uploads/{{$bike->bikepic}}" />
           &nbsp; &nbsp; &nbsp;
           &nbsp; &nbsp; &nbsp; 
           &nbsp; &nbsp; &nbsp;
@@ -201,14 +216,24 @@ button:hover {
                                 </div>
                                 </div>
                     
-
-
-
-            <button class = "justify"type="submit">Book the Bike</button>                                                         
+          <button type="button" class="btn"> 
+              <a href="../bikedetail/{{$bike->id}}" style="color:inherit;   text-decoration: none;"> Back </a>
+            </button>
+            &nbsp;
+            <button class = "justify"type="submit">Book the Bike</button>  
+                                                       
             </form>
-        @endforeach                             
+        @endforeach  
+
+
+
+        
                     <!--SHIPPING METHOD END-->
                     <script  src="{{asset('js/moment/moment-with-locales.min.js')}}"></script>
+
+
+
+    
 <script>
             
             function showDays() {

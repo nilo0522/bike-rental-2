@@ -126,9 +126,9 @@ h2{color:#0b56a8;}
           <li class=""><a href="#tab2" data-toggle="tab">My Bikes</a></li>
           <li class=""><a href="#tab3" data-toggle="tab">Upload Bikes</a></li>  
           <li class=""><a href="#tab4" data-toggle="tab">My rentals</a></li>  
+          <li class=""><a href="#tab6" data-toggle="tab">Returned Bikes</a></li>
           <hr>
           <li class=""><a href="#tab5" data-toggle="tab">Maps</a></li> 
-          <li class=""><a href="#tab6" data-toggle="tab">Payouts</a></li>
           <li class=""><a href="#tab7" data-toggle="tab">My Earnigs</a></li>
 		</ul>
 	</nav>
@@ -143,7 +143,7 @@ h2{color:#0b56a8;}
   <form action=""method="">
   @csrf
   <h2>Profile</h2>
-       <div class="col-xs-4 col-lg-6">
+       <div class="col-xs-8 col-lg-6">
                       <div class="form-group row">
                                     <div class="col-sm-6">
                                         <label for="fname">First name</label>
@@ -159,13 +159,13 @@ h2{color:#0b56a8;}
                                         <label for="email">Email</label>
                                         <input type="text" class="form-control" name = "email"id="email" value="{{ Auth::user()->email }}">
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-md-6">
                                         <label for="number">Number</label>
                                         <input type="text" class="form-control" name = "number"id="number" value=" {{ Auth::user()->number }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-sm-6">
+                                    <div class="col-md-6">
                                         <label for="gender">Gender</label>
                                         <input type="text" class="form-control" name = "gender"id="gender" value="{{ Auth::user()->gender }}">
                                     </div>
@@ -332,13 +332,96 @@ h2{color:#0b56a8;}
  <!-- RENTALS  -->
   <div class="tab-pane text-style" id="tab4">
   <h2>My Rentals</h2>
-  <p>
-Rentals
-  </p>
+ 
+ <form name="rental" method="post">
+   @csrf
+  <div class="col-md-9 col-xs-12">
+  <table class="table table-borderless table-responsive">
+  <thead>
+    <tr>
+      <th >Bike Name</th>
+      <th>Owner Name</th>
+      <th>Date Start</th>
+      <th>Date End</th>
+      <th>Total Cash Paid</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+      <td>@fat</td>
+      <td>@fat</td>
+      <td>
+      <div class="btn-group" role="group" aria-label="Button group example">
+      <button class="btn-xs btn-info"  type="button" data-toggle="modal" data-target="#Return">
+      Return</button>
+       &nbsp;
+       <button class="btn-xs btn-success"  type="button" data-toggle="modal" data-target="#Extend">
+      Extend</button>
+
+<!-- Return MODAL -->
+<!-- Return MODAL-->
+<!-- Return MODAL-->
+<div class="modal fade" id="Return" tabindex="-1" role="dialog" aria-labelledby="Return" aria-hidden="true">
+  <div class="modal-dialog modal-xs" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Return">Returning Issues</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <input type="text" class="form-control" placeholder="Username" />
+      <input type="text" class="form-control" placeholder="Username" />
+      <input type="text" class="form-control" placeholder="Username" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Return</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Extend MODAL -->
+<!-- Extend MODAL -->
+<!-- Extend MODAL -->
+<div class="modal fade" id="Extend" tabindex="-1" role="dialog" aria-labelledby="Extend" aria-hidden="true">
+  <div class="modal-dialog modal-xs" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="Extend">Extend Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+      <input type="text" class="form-control" placeholder="Username" />
+      <input type="text" class="form-control" placeholder="Username" />
+      <input type="text" class="form-control" placeholder="Username" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Extend</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+      
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
     <hr>
+</div>
   </div>
 
-
+</form>
 <!--END RENTALS-->
  <!--END RENTALS  -->
  <!--END RENTALS  -->
@@ -371,9 +454,9 @@ Maps
  <!--PAYOUTS  -->
  <!--PAYOUTS  -->
   <div class="tab-pane text-style" id="tab6">
-  <h2>Payouts</h2>
+  <h2>Returned Bikes</h2>
   <p>
-Payouts
+  Returned Bikes
   </p>
   <hr> 
   </div>

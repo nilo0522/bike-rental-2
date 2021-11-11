@@ -881,8 +881,8 @@ pre code {
   }
 
   .col-sm-8 {
-    flex: 0 0 66.6666666667%;
-    max-width: 66.6666666667%;
+    flex: 0 0 75%;
+    max-width: 75%;
   }
 
   .col-sm-9 {
