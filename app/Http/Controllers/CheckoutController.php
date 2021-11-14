@@ -20,7 +20,8 @@ class CheckoutController extends Controller
     public function checkout(Request $request)
     {   
         // Enter Your Stripe Secret
-        \Stripe\Stripe::setApiKey('sk_test_51JeXT6E8vw61AZaQLjaHy3SUO9iv2tLPKyDC8vfIQKdB1Vg2ST3iQVR18l7uiIsYVll4QQzxCHO4rGyWTi0u90jO00MkekBmOK');
+       $stripekey= env('STRIPE_PUBLIC_KEY');
+        \Stripe\Stripe::setApiKey( env('STRIPE_SECRET_KEY'));
     
 
         
@@ -60,14 +61,15 @@ $latest = DB::table('rentals')
 */
         $amount*=100;
         $payment_intent = \Stripe\PaymentIntent::create([
-			'amount' => $amount,
+			'amount' => round($amount*100),
 			'currency' => 'PHP',
 			'description' => 'Payment From Bike Rental',
 			'payment_method_types' => ['card'],
 		]);
         //FOR BIKES
 		$intent = $payment_intent->client_secret;
-		return view('user.checkout.credit-card',compact('intent','latest','transfee'));
+        Log::info($payment_intent);
+		return view('user.checkout.credit-card',compact('intent','latest','transfee'))->with('stripekey',$stripekey);
     }
 
     

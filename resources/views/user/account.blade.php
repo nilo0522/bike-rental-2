@@ -3,46 +3,15 @@
 @section('content')
 <style>
 
-  /**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR *//**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR *//**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR *//**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
-/**UNDER REPAIR */
+
   .btn-file {
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 .btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
+   
+    
     text-align: right;
     filter: alpha(opacity=0);
     opacity: 0;
@@ -140,77 +109,113 @@ h2{color:#0b56a8;}
  <!--  PROFILE -->
 <div class="tab-content">
 <div class="tab-pane active text-style" id="tab1">
-  <form action=""method="">
-  @csrf
-  <h2>Profile</h2>
-       <div class="col-xs-8 col-lg-6">
-                      <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <label for="fname">First name</label>
-                                        <input type="text" class="form-control" name = "fname"id="fname" value="{{ Auth::user()->fname }}">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="lname">Last name</label>
-                                        <input type="text" class="form-control" name = "lname"id="lname" value="{{ Auth::user()->lname }}">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <label for="email">Email</label>
-                                        <input type="text" class="form-control" name = "email"id="email" value="{{ Auth::user()->email }}">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="number">Number</label>
-                                        <input type="text" class="form-control" name = "number"id="number" value=" {{ Auth::user()->number }}">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                        <label for="gender">Gender</label>
-                                        <input type="text" class="form-control" name = "gender"id="gender" value="{{ Auth::user()->gender }}">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="street">Street</label>
-                                        <input type="text" class="form-control" name = "street"id="street" value="{{ Auth::user()->street }}">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="city">City</label>
-                                        <input type="text" class="form-control" name = "city"id="city" value="{{ Auth::user()->city }}">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="submit"></label>
-                                        <br>
-                                        <button type="text" class="btn btn-info" name = "submit"id="submit">Save Changes</button>
-                                    </div>
-                                </div>
-                                </div> 
-                                            <div class="col-sm-6">
-                                            <div id="profile-container">
-                                            <image id="profileImage" src="http://lorempixel.com/100/100" />
-                                            </div>
-                                                  <div class="input-group">
-                                                      <span class="input-group-btn">
-                                                          <span class="btn-sm btn-danger btn-file">
-                                                              Change Picture <input type="file" id="imgInp">
-                                                          </span>
-                                                      </span>
-                                                      <input type="text" name="image" id="image"class="form-control" readonly>
-                                                  </div>
-                                                  <img id='img-upload'/>
-                                              </div> 
-</form>                                
+  <div class="col-sm-9 justify-content-center">
+      <div class="col-sm-12">
+        <h2 style="margin-top: 5%">Profile</h2>
+          <div class="sidebar_widget" style="border:5px solid #337ab7">
+            <div class="form-group col-sm-12">
+              <div id="profile-container" class="float-right">
+                @php
+                    $img = Auth::user()->prof_img ? : "uploads/user.png";
+                @endphp
+                <img id='img-upload'  src = '{{asset($img)}}' />
+                <input type="hidden"
+                   value="{{$img}}"
+                   id = "img"/>
+                </div>
+                <div class="input-group">
+                  <span class="input-group-btn">
+                    <span class="btn-sm btn-danger btn-file">
+                      Change Picture 
+                      <input type="file" id="imgInp" name="imgInp"  >
+                    </span>
+                  </span>
+                
+                </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-6">
+                  <label for="fname">First name</label>
+                  <input type="text" 
+                    class="form-control" 
+                    name = "fname"
+                    id="fname" 
+                    value="{{ Auth::user()->fname }}"/>
+              </div>
+              <div class="col-sm-6">
+                  <label for="lname">Last name</label>
+                  <input type="text" 
+                    class="form-control" 
+                    name = "lname"
+                    id="lname" 
+                    value = "{{ Auth::user()->lname }}"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-6">
+                  <label for="email">Email</label>
+                  <input type="text" 
+                    class="form-control" 
+                    name = "email"
+                    id="email" 
+                    value="{{ Auth::user()->email }}"/>
+              </div>
+              <div class="col-md-6">
+                  <label for="number">Number</label>
+                  <input type="text" 
+                    class="form-control" 
+                    name = "number"
+                    id="number" 
+                    value=" {{ Auth::user()->number }}"/>
+              </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+                <label for="gender">Gender</label>
+                <select name = "gender" id="gender" class="form-control">
+                  <option value="Male" @if(Auth::user()->gender == "Male" ) selected @endif> 
+                    Male
+                  </option>
+                  <option value="Female" @if(Auth::user()->gender == "Female" ) selected @endif>
+                    Female
+                  </option>
+                </select>
+               
+            </div>
+            <div class="col-sm-6">
+                <label for="street">Street</label>
+                <input type="text" 
+                class="form-control" 
+                name = "street"
+                id="street" 
+                value="{{ Auth::user()->street }}"/>
+            </div>
+            <div class="col-sm-6">
+                <label for="city">City</label>
+                <input type="text" 
+                  class="form-control" 
+                  name = "city"
+                  id="city" 
+                  value="{{ Auth::user()->city }}"/>
+            </div>
+            <div class="col-sm-6">
+                <label for="submit"></label>
+                <br>
+                <button type="text" 
+                  class="btn btn-info" 
+                  name = "save_prof" 
+                  id="save_prof">
+    
+                  Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>                    
 
-</div>                     
 
-<!-- END PROFILE -->
- <!-- END PROFILE -->
- <!-- END PROFILE -->
-   
- <!-- ----------------------------------------------------------------------------------------------------------------------------- -->   
-
-<!-- POSTED Bike -->
- <!-- POSTED Bike -->
- <!-- POSTED Bike -->
 
 <div class="tab-pane text-style" id="tab2">
   <h2>My Bikes</h2>
@@ -491,7 +496,62 @@ EARNINGS
     
 </div>
 
+<input type="hidden"
+value="{{Auth::user()->id}}"
+id="user_id"
+/>
+<script>
 
+  
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+   const  Toast = Swal.mixin({
+      toast: true,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  const url = 'http://127.0.0.1:8000/api'
+   
+    $('#save_prof').click(  function(){
+      $('#save_prof').prop('disabled',true)
+      let fname = $('#fname').val()
+    let lname =  $('#lname').val()
+    let email =  $('#email').val()
+    let number =  $('#number').val()
+    let street =  $('#street').val()
+    let gender =  $('#gender').val()
+    let img2 = $('#imgInp')[0].files[0]
+    let img = $('#img').val()
+    let id = $('#user_id').val()
+    let city =  $('#city').val()
+          alert(img)
+          const data = new FormData()
+          data.append('fname',fname)
+           data.append('lname',lname)
+           data.append('email',email)
+           data.append('number',number)
+           data.append('street',street)
+           data.append('city',city)
+           data.append('prof_img2',img2)
+           data.append('prof_img',img)
+           data.append('gender',gender)
+           data.append('id',id)
+          axios.post(url+'/save-profile',data).then(response => {
+            console.log(response)
+            let data = response.data
+            Swal.fire(
+                data.message,
+                ' ',
+                'success',
+                )
+               
+          })
+          
+          $('#save_prof').prop('disabled',false)
+    })
+</script>
 
 
 <script>
@@ -509,9 +569,9 @@ EARNINGS
 		    
 		    if( input.length ) {
 		        input.val(log);
-		    } else {
-		        if( log ) alert(log);
-		    }
+		    }else{
+          $('#img').val('uploads/'+log)
+        }
 	    
 		});
 		function readURL(input) {

@@ -6,6 +6,8 @@ use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Auth;
 class ProfileController extends Controller
 {
     /**
@@ -44,5 +46,15 @@ class ProfileController extends Controller
         auth()->user()->update(['password' => Hash::make($request->get('password'))]);
 
         return back()->withStatusPassword(__('Password successfully updated.'));
+    }
+
+    public function store(Request $request)
+    {   
+            $contents=$request->prof_img2;
+            $name=$contents->getClientOriginalName();
+            $contents->move('uploads',$name);
+       $user = User::find($request->id)->update($request->all());
+       $user = User::find($request->id);
+            return response()->json(['user' =>$user,'message'=> 'Update successfully' ]);
     }
 }

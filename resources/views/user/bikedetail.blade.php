@@ -129,39 +129,12 @@
 <!--Listing-detail-->
 <section class="listing-detail">
   <div class="container">
-    <div class="listing_detail_head row">
-      <div class="col-md-9">
-        <h2>{{$data->bikename}}</h2>
-      </div>
-      <div class="col-md-3">
-        <div class="price_info">
-          <p>Pesos {{$data->bikeprice}}</p>Per Day
-         
-        </div>
-      </div>
-    </div>
+
     <div class="row">
       <div class="col-md-9">
-        <div class="main_features">
-          <ul>
-          
-            <li> <i class="fa fa-calendar" aria-hidden="true"></i>
-              <h5>{{$data->bikemodel}}</h5>
-              <p>Model Year</p>
-            </li>
-            <li> <i class="fa fa-cogs" aria-hidden="true"></i>
-              <h5>{{$data->biketype}}</h5>
-              <p>Bike Type</p>
-            </li>
-       
-           <!-- <li> <i class="fa fa-user-plus" aria-hidden="true"></i>
-              <h5>{{$data->carseats}}</h5>
-              <p>Seats</p>
-            </li> -->
-          </ul>
-        </div>
-        <div class="listing_more_info">
-          <div class="listing_detail_wrap"> 
+    
+        <div class="listing_more_info ">
+          <div class="listing_detail_wrap "> 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs gray-bg" role="tablist">
               <li role="presentation" class="active"><a href="#vehicle-overview " aria-controls="vehicle-overview" role="tab" data-toggle="tab">Vehicle Overview </a></li>
@@ -175,8 +148,47 @@
               <!-- vehicle-overview -->
               <div role="tabpanel" class="tab-pane active" id="vehicle-overview">
                 
-                <p>Address: {{$data->address}}</p>
+                <div class="row">
+                  <div class="col-sm-7">
+                      <div class="card">
+                        <div class="card-body"  style="background-image:url({{asset('uploads/'.$data->bikepic)}});background-size: 100%">
+                            <img src="{{asset('uploads/'.$data->bikepic)}}" width = "100px" height="200px" style="background-repeat: no-repeat" />
+                          </div> 
 
+                      </div>
+                  </div>
+                  <div class="col-sm-5">
+                    <div class="card">
+                      <div class="card-body">
+                          <div class="form-group">
+                            <h1>{{$data->bikename}}</h1>
+                            <h3>₱ {{$data->bikeprice}} / perday</h3>
+                          </div>
+                        </div> 
+
+                    </div>
+                </div>
+                </div>
+                <div class="row mt-3"> 
+                  <div class="col-sm-12">
+                    <div class="main_features">
+                      <ul>
+          
+                        <li> <i class="fa fa-bicycle" aria-hidden="true"></i>
+                          <h5>{{$data->bikemodel}}</h5>
+                          <p>Model</p>
+                        </li>
+                        <li> <i class="fa fa-cogs" aria-hidden="true"></i>
+                          <h5>{{$data->biketype}}</h5>
+                          <p>Bike Type</p>
+                        </li>
+                   
+                    
+                      </ul>
+                    </div>
+                  </div>
+                 
+                </div>
               </div>
               
               
@@ -235,10 +247,11 @@
    
       </div>
       
-      <!--Side-Bar-->
-      <aside class="col-md-3">
+      <div class="col-sm-3">
+              <!--Side-Bar-->
       
-        <div class="share_vehicle">
+      
+        <div class="share_vehicle " style="margin-top: 60px;!important" >
           <p>Share: <a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> </p>
         </div>
         <div class="sidebar_widget">
@@ -253,8 +266,9 @@
          
          
 
-        </div>
-      </aside>
+        
+      
+      </div>
       <!--/Side-Bar--> 
     </div>
     

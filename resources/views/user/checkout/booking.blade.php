@@ -1,27 +1,11 @@
+@extends('layouts.rentbike')
 
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
+
+@section('content')
+
 
 <style>
 
-body {
-  width: 500px;
-  margin: 0 auto;
-  padding: 50px;
-}
 
 div.elem-group {
   margin: 15px 0;
@@ -87,143 +71,119 @@ button:hover {
 
   </style>
 
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="src/mini-event-calendar.min.css">    
-
-
-
-           <h3 class="text-center"> 
-          &nbsp; &nbsp; &nbsp;
-          &nbsp; &nbsp; &nbsp; 
-          &nbsp; &nbsp; &nbsp;
-          &nbsp; &nbsp; &nbsp;
-          &nbsp; &nbsp; &nbsp;Rent A Bike Booking Form</h3>
-
-          <form id="booking-form" action="{{route('checkout')}}" method="POST" enctype=multipart/form-data>
-                        @csrf   
-                        @method('GET')                                 
-                <div class="elem-group">
-                
-       <!--REVIEW ORDER-->
-              
-<hr>
-             <input type="hidden" value="0" name="rent_status"/>
-             <input type="hidden" value="pending" name="remarks"/>
-                <label for="name">First Name</label>
-                <input type="hidden" id="user_id" name="user_id"  value="{{ Auth::user()->id }}" pattern=[A-Z\sa-z]{3,20} required>
-                
-                <input type="text" id="fname" name="fname"  value="{{ Auth::user()->fname }}" pattern=[A-Z\sa-z]{3,20} required>
-                <label for="lname">Last Name</label>
-                <input type="text" id="lname" name="lname" value="{{ Auth::user()->lname }}" pattern=[A-Z\sa-z]{3,20} required>
-               
-            </div>
-                <div class="elem-group">
-                <label for="email">Your E-mail</label>
-                <input type="email" id="email" name="email" value="{{ Auth::user()->email }}" required>
-            </div>
-            <div class="elem-group">
-                <label for="phone">Your Phone</label>
-                <input type="tel" id="number" name="number" value="{{ Auth::user()->number }}"  required>
-            </div>
-         
-            
-            <div class="elem-group inlined">
-            <div class="col-md-12"><strong>Start Date:</strong></div>
-            <div class="col-md-12"><input  name="rent_start_date" id="rent_start_date" class="form-control" autocomplete="off"  required /></div>
-                                                                    
-            </div>
-            <div class="elem-group inlined">
-            <div class="col-md-12"><strong>End Date:</strong></div>
-                <div class="col-md-12"><input  name="rent_end_date" id="rent_end_date" class="form-control"  required  autocomplete="off"/></div>
-            </div>
-
-
-           
-            <div class="elem-group">
-                <label for="pickup">Pick up Address</label>
-                <input id="pickup" name="pickup" placeholder="Set your Pick Up Address." required/>
-            </div>
-
-           
-
-
-
-            @foreach($bike_details as $bike)
-                        <div class="panel-body">
-                            
-
-
-   
+<div class="container">
+  <div class="div_zindex">
+    <div class="col-sm-12 d-flex justify-content-center">
+      <h3 class="text-center "> 
+        Rent A Bike Booking Form</h3>
+    </div>
     
-        <div class="col-4">
-          <div class="mx-auto text-center">
-          &nbsp; &nbsp; &nbsp;
-          &nbsp; &nbsp; &nbsp; 
-          &nbsp; &nbsp; &nbsp;
-          &nbsp; &nbsp; &nbsp;
-          &nbsp; &nbsp; &nbsp;
-          
-          <img class="img-responsive mx-auto d-block" style="height:200px; width:250px" src="../uploads/{{$bike->bikepic}}" />
-          &nbsp; &nbsp; &nbsp;
-          &nbsp; &nbsp; &nbsp; 
-          &nbsp; &nbsp; &nbsp;
-          &nbsp; &nbsp; &nbsp;
-          &nbsp; &nbsp; &nbsp;
-          <label >{{$bike->bikename}} </label>
-          <input type="hidden"id="bike_id" name="bike_id" value="{{$bike->id}}">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="sidebar_widget" id="personal">
+                    <div class="card-header">
+                        <h3 class="card-title">Personal Details</h3>
+                    </div>
+                    <div class="card-body">
+                          <div class="form-group">
+                            <label for="name">Name</label>
+                            <input class="form-control"  type="text" id="fname" name="fname"  value="{{ Auth::user()->fname }} {{Auth::user()->lname}}" pattern=[A-Z\sa-z]{3,20} required>
+                          </div>
+                          
+                          <div class="form-group">
+                            <label for="email">Email</label>
+                            <input class="form-control"   type="email" id="email" name="email" value="{{ Auth::user()->email }}" required/>
+                          </div>
+                          <div class="form-group">
+                            <label for="phone">Contact</label>
+                            <input class="form-control"  type="tel" id="number" name="number" value="{{ Auth::user()->number }}"  required/>
+                          </div>
+                    </div>
+                </div>
+                <div class="sidebar_widget" id="div-total">
+                  
+                  <span>₱</span>
+                  <input style="width:60px;border:none transparent"id="Totxdays" name="fullpayment">
+                  @foreach($bike_details as $bike)
+                  <span>₱</span>
+                  <input style="width:60px;border:none transparent"id="bikeprice" name="bikeprice" value="{{$bike->bikeprice}}">
+             
+             
+                  <div class="col-xs-12">Rent Days: <input style="width:50px;border:none transparent" name = "rentdays" id="num_nights"></label></div>
+                 
+                      <div class="form-group"><hr /></div>
+                      <div class="form-group">
                       
-       </div>     
-      <br>
+                      
+                              <strong>Subtotal  </strong><small>(60% Payment)</small>
+                              <div class="pull-right"><span>₱</span>
+                                  <input style="width:60px;border:none transparent"id="sub" name="sub_total" >
+                      
+                          </div>
+                          <div class="col-xs-12">
+                          <div class="form-group"><hr /></div>
+                              <strong>Transaction Fee</strong>
+                              
+                              <div class="pull-right"><span>₱</span>
+                              <input style="width:60px;border:none transparent"id="transfee" name="transfee"></div>
+                          </div>
+                      </div>
+                      <div class="form-group"><hr /></div>
+                      <div class="form-group">
+                          <div class="col-xs-12">
+                          <div class="form-group"><hr /></div>
+                              <strong>Book Total</strong>
+                              <div class="pull-right"><span>₱</span>
+                              <input style="width:60px;border:none transparent"id="total_amount" name="total_amount">
+                          </div>
+                          </div>
+                      </div>
+    <button type="button" class="btn"> 
+        <a href="../bikedetail/{{$bike->id}}" style="color:inherit;   text-decoration: none;"> Back </a>
+      </button>
+      &nbsp;
+      <button class = "justify"type="submit">Book the Bike</button>  
+                                                 
+   
+  @endforeach  
+                </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="sidebar_widget">
+                <div class="card-header">
+                    <h3 class="card-title">Rent Date</h3>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label><strong>Start Date:</strong></label>
+                    <input  name="rent_start_date" id="rent_start_date" class="form-control" autocomplete="off"  required />
+                  </div>
+                  <div class="form-group">
+                    <label><strong>Return Date:</strong></label>
+                    <input  name="rent_end_date" id="rent_end_date" class="form-control"  required  autocomplete="off"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="pickup">Pick up address</label>
+                    <input class="form-control" id="pickup" name="pickup" placeholder="Set your pick up address." required/>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-sm-12 d-flex justify-content-center">
+        <div class="col-sm-10"  >
+ 
+        </div>
+    </div>
+  </div>
+</div>
 
-                                    <span>₱</span>
-                                    <input style="width:60px;border:none transparent"id="bikeprice" name="bikeprice" value="{{$bike->bikeprice}}">
-                               
-                               
-                                    <div class="col-xs-12">Rent Days: <input style="width:50px;border:none transparent" name = "rentdays" id="num_nights"></label></div>
-                                </div>
-                                <span>₱</span>
-                                    <input style="width:60px;border:none transparent"id="Totxdays" name="fullpayment">
-                            </div>
-                               
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                            
-                            
-                                    <strong>Subtotal  </strong><small>(60% Payment)</small>
-                                    <div class="pull-right"><span>₱</span>
-                                        <input style="width:60px;border:none transparent"id="sub" name="sub_total" >
-                            
-                                </div>
-                                <div class="col-xs-12">
-                                <div class="form-group"><hr /></div>
-                                    <strong>Transaction Fee</strong>
-                                    
-                                    <div class="pull-right"><span>₱</span>
-                                    <input style="width:60px;border:none transparent"id="transfee" name="transfee"></div>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                <div class="form-group"><hr /></div>
-                                    <strong>Book Total</strong>
-                                    <div class="pull-right"><span>₱</span>
-                                    <input style="width:60px;border:none transparent"id="total_amount" name="total_amount">
-                                </div>
-                                </div>
-                    
-          <button type="button" class="btn"> 
-              <a href="../bikedetail/{{$bike->id}}" style="color:inherit;   text-decoration: none;"> Back </a>
-            </button>
-            &nbsp;
-            <button class = "justify"type="submit">Book the Bike</button>  
-                                                       
-            </form>
-        @endforeach  
+     
+
+
+         
 
 
 
@@ -234,12 +194,15 @@ button:hover {
 
 
     
-<script>
-            
+<script >
+     $('#div-total').hide()
+     $('#personal').show()
             function showDays() {
+              $('#personal').hide()
+              $('#div-total').show()
                 var start = $('#rent_start_date').datepicker('getDate');
                 var end = $('#rent_end_date').datepicker('getDate');
-                var bikeprice = document.getElementById("bikeprice").value;
+                var bikeprice = $('#bikeprice').val()
                 
                 if (!start || !end) return;
                 var days = (end - start) / 1000 / 60 / 60 / 24;
@@ -275,18 +238,19 @@ button:hover {
                 dateFormat: 'yy-mm-dd',
                 onSelect: showDays,
             });*/
-
+          
             function dateSelect(start_date)
             {
+             
                 var date = new Date(start_date);
                 date.setDate( date.getDate()+ 1);
                  var newdate = moment(date).format('YYYY-MM-DD')
                 $("#rent_end_date").prop('disabled',false).datepicker({
                 dateFormat: 'yy-mm-dd',
-                onSelect: showDays,
+                onSelect:showDays,
                 minDate: newdate,
             })
             }
       </script>  
 
-
+@endsection
