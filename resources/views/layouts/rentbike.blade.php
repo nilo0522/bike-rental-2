@@ -8,13 +8,12 @@
 <meta name="description" content="">
 <title>Bike Rental | @yield('title')</title>
 <!--Bootstrap -->
-<link rel="stylesheet" href="../assets/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" type="text/css">
 <link rel="stylesheet" href="../assets/css/style.css" type="text/css">
 <link rel="stylesheet" href="../assets/css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="../assets/css/owl.transitions.css" type="text/css">
 <link href="../assets/css/slick.css" rel="stylesheet">
-<link href="../assets/css/bootstrap-slider.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+<link href="{{asset('assets/css/bootstrap-slider.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" id="switcher-css" type="text/css" href="../assets/switcher/css/switcher.css" media="all" />
 <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
 <link rel="alternate stylesheet" type="text/css" href="../assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
@@ -29,26 +28,29 @@
 <link rel="apple-touch-icon-precomposed" href="../assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
 <link rel="shortcut icon" href="../assets/images/favicon-icon/favicon.png">
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"> 
-<link href="../css/rentcar.css" rel="stylesheet">
+<link href="../css/rentbike.css" rel="stylesheet">
+
+<script src="{{asset('js/app.js')}}"></script>
 
 
 
 
 
-<!--CHECK OUT FORM -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!--DATATABLE -->
+<script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/js/dataTables.bootstrap4.min.js')}}"></script>
 
-  
-  <!------ Include the above in your HEAD tag ---------->
-
-
-  
-<!--DATE PICKER -->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!--MODAL -->
+<script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
 	
 
-<!--CHECKOUT -->
+<!--DATE PICKER -->
+<link rel="stylesheet" href="{{asset('assets/css/jquery-ui.css')}}">
+
+<!--calendar -->
+
+<script src="{{asset('assets/js/jquery-1.12.4.js')}}"></script>
+<script src="{{asset('assets/js/calendar-ui.js')}}"></script>
 
 
 </head>
@@ -56,22 +58,22 @@
 
 
 <!-- Start Switcher -->
-@include('../includes/colorswitcher')
+@include('includes.colorswitcher')
 <!-- /Switcher -->  
 
 
-@include('../includes/rentbikeheader')
+@include('includes.rentbikeheader')
 
 @yield('content')
 <!--Footer -->
-@include('../includes/rentbikefooter')
+@include('includes.rentbikefooter')
 <!-- /Footer--> 
 <!--Back to top-->
 <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
 <!--/Back to top--> 
 
 <!-- Scripts --> 
-<script src="../assets/js/jquery.min.js"></script>
+
 <script src="../assets/js/bootstrap.min.js"></script> 
 <script src="../assets/js/interface.js"></script> 
 <!--Switcher-->
@@ -81,7 +83,7 @@
 <!--Slider-JS--> 
 <script src="../assets/js/slick.min.js"></script> 
 <script src="../assets/js/owl.carousel.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{asset('assets/js/sweetalert.min.js')}}"></script>
 
 
 </body>

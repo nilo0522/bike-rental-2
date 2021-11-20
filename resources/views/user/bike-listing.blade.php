@@ -36,10 +36,10 @@
           </div>
           <div class="product-listing-content">
             <h5><a href="bikedetail/{{$data->id}} ">{{$data->bikename}} </a></h5>
-            <p class="list-price">Price Per Day: {{$data->bikeprice}} Php  </p>
+            <p class="list-price">Price Per Day:₱ {{$data->bikeprice}}   </p>
             <ul>
             <!-- <li><i class="fa fa-user" aria-hidden="true"></i> {{$data->carseats}} seats</li> -->
-              <li><i class="fa fa-calendar" aria-hidden="true"></i> {{$data->bikemodel}} model</li>
+              <li><i class="fa fa-industry" aria-hidden="true"></i> {{$data->bikemodel}} model</li>
             <li><i class="fa fa-bicycle" aria-hidden="true">&nbsp; Bike type: {{$data->biketype}}</i></li>
             </ul>
             <p class="list-city">City: {{$data->location}} </p>
@@ -89,7 +89,7 @@
               <li class="gray-bg">
                 <div class="recent_post_img"> <a href="bikedetail/{{$data->id}}"><img src="uploads/{{$data->bikepic}}" alt="image"></a> </div>
                 <div class="recent_post_title"> <a href="bikedetail/{{$data->id}}">{{$data->bikename}}</a>
-                  <p class="widget_price">{{$data->bikeprice}}Pesos Per Day</p>
+                  <p class="widget_price">₱ {{$data->bikeprice}} Per Day</p>
                 </div>
               </li>
               @empty

@@ -1,5 +1,9 @@
 /* contact Page */
 
+* {
+    font-family: Roboto, 'Times New Roman', Times, serif;
+}
+
 .errorWrap {
     padding: 10px;
     margin: 0 0 20px 0;
@@ -153,9 +157,9 @@ Upload Post */
 }
 
 #contact {
-    background: black;
+    background: rgb(53, 56, 71);
     padding: 25px;
-    margin: 150px 0;
+    margin: 25px 0;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
@@ -241,3 +245,7 @@ fieldset {
 
 
 /* End Upload Car */
+
+
+
+/* CALENDAR*/
