@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,3 +23,5 @@ Route::middleware('auth:api')->get('/admin', function() {
 Route::post('login',[LoginController::class,'login']);
 Route::post('register',[LoginController::class,'signup']);
 Route::post('update',[ProfileController::class,'update'])->name('update');
+
+Route::post('save-profile',[ProfileController::class,'store']);

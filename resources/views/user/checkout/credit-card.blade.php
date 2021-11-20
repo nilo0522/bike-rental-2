@@ -205,9 +205,7 @@ ol, ul {
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-@php
-        $stripe_key = 'pk_test_51JeXT6E8vw61AZaQK5ctuXAVdQoRgEYElIy8gPwbW8pUG9c6TbD994Cs7ETqBfYv1JNFcDJnbxIWmHRXroWDsGq800glncb2Pe';
-    @endphp
+
     <form id="payment-form" action="{{route('checkout.credit-card')}}" method="POST">
     @csrf 
 
@@ -344,8 +342,8 @@ ol, ul {
                 iconColor: '#fa755a'
             }
         };
-    
-        const stripe = Stripe('{{ $stripe_key }}', { locale: 'en' }); // Create a Stripe client.
+        alert("{{$stripekey}}")
+        const stripe = Stripe('{{ $stripekey }}', { locale: 'en' }); // Create a Stripe client.
         const elements = stripe.elements(); // Create an instance of Elements.
         const cardElement = elements.create('card', { style: style }); // Create an instance of the card Element.
         const cardButton = document.getElementById('card-button');

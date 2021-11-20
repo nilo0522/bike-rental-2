@@ -730,17 +730,17 @@ table thead th, table thead td {
 	1.10. Modal
 --------------------------------*/
 .modal-dialog {
-  width: 650px;
+  width: 500px;
 }
 .modal-content {
-  padding: 0 32px 22px;
+  padding: 0 25px 15px;
 }
 .modal-header {
 	padding:15px 0;
-	margin-bottom:25px;
+	margin-bottom:2px;
 }
 .modal-body {
-	padding:10px 0;
+	padding:5px 0;
 }
 .modal .modal-header .close {
   background: #000000 none repeat scroll 0 0;
@@ -749,7 +749,7 @@ table thead th, table thead td {
   font-size: 17px;
   height: 31px;
   line-height: 30px;
-  margin-top: 5px;
+  margin-top: 1px;
   opacity: 1;
   text-align: center;
   text-shadow: none;
