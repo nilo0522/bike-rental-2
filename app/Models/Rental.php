@@ -26,4 +26,6 @@ class Rental extends Model
         'pickup',
         'fullpayment',
     ];
+
+    
 }

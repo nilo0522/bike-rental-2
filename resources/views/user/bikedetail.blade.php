@@ -1,4 +1,3 @@
-
 <!-- UNDER REPAIR-->
 <!-- UNDER REPAIR-->
 <!-- UNDER REPAIR-->
@@ -17,30 +16,24 @@
 
 @section('content')
 <style>
-
 * {
     font-family: Roboto, 'Times New Roman', Times, serif;
 }
-
 .hbContainer {
     max-width: 400px;
     margin: auto;
     color:#111921;
     background-color:#f2d9bf;
 }
-
 .left {
     float: left;
 }
-
 .right {
     float: right;
 }
-
 .center {
     text-align: center;
 }
-
 .calendarList1 {
     list-style: none;
     width: 100%;
@@ -56,7 +49,6 @@
     font-size: 14px;
     color: #2767b1;
 }
-
 .calendarList2 {
     list-style: none;
     margin: 0;
@@ -71,17 +63,14 @@
     font-size: 14px;
     color: #111921;
 }
-
 .calendarYearMonth {
     margin-top: 24px;
 }
-
 .calendarYearMonth p {
     display: inline-block;
     vertical-align: middle;
     font-size: 20px;
 }
-
 .calBtn {
     user-select: none;
     cursor: pointer;
@@ -151,8 +140,8 @@
                 <div class="row">
                   <div class="col-sm-7">
                       <div class="card">
-                        <div class="card-body"  style="background-image:url({{asset('uploads/'.$data->bikepic)}});background-size: 100%">
-                            <img src="{{asset('uploads/'.$data->bikepic)}}" width = "100px" height="200px" style="background-repeat: no-repeat" />
+                        <div class="card-body">
+                            <img src="{{asset('uploads/'.$data->bikepic)}}" width = "300px" height="150px" style="background-repeat: no-repeat" />
                           </div> 
 
                       </div>
@@ -174,7 +163,7 @@
                     <div class="main_features">
                       <ul>
           
-                        <li> <i class="fa fa-bicycle" aria-hidden="true"></i>
+                        <li> <i class="fa fa-industry" aria-hidden="true"></i>
                           <h5>{{$data->bikemodel}}</h5>
                           <p>Model</p>
                         </li>
@@ -298,8 +287,6 @@ const months = [
 ];
 var currentYear = new Date().getFullYear();
 var currentMonth = new Date().getMonth() + 1;
-
-
 function letsCheck(year, month) {
     var daysInMonth = new Date(year, month, 0).getDate();
     var firstDay = new Date(year, month, 01).getUTCDay();
@@ -309,8 +296,6 @@ function letsCheck(year, month) {
     };
     return array;
 }
-
-
 function makeCalendar(year, month) {
     var getChek = letsCheck(year, month);
     getChek.firstDay === 0 ? getChek.firstDay = 7 : getChek.firstDay;
@@ -326,10 +311,7 @@ function makeCalendar(year, month) {
     monthName = months.find(x => x.id === month).name;
     $('#yearMonth').text(year + ' ' + monthName);
 }
-
 makeCalendar(currentYear, currentMonth);
-
-
 function nextMonth() {
     currentMonth = currentMonth + 1;
     if (currentMonth > 12) {
@@ -340,8 +322,6 @@ function nextMonth() {
     $('#yearMonth').text(currentYear + ' ' + currentMonth);
     makeCalendar(currentYear, currentMonth);
 }
-
-
 function prevMonth() {
     currentMonth = currentMonth - 1;
     if (currentMonth < 1) {
@@ -352,14 +332,9 @@ function prevMonth() {
     $('#yearMonth').text(currentYear + ' ' + currentMonth);
     makeCalendar(currentYear, currentMonth);
 }
-
-
-
 </script>
 
 @empty
             no data found
         @endforelse
 @endsection
-
-
