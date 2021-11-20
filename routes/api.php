@@ -25,3 +25,4 @@ Route::post('register',[LoginController::class,'signup']);
 Route::post('update',[ProfileController::class,'update'])->name('update');
 
 Route::post('save-profile',[ProfileController::class,'store']);
+Route::post('submit-return',[ProfileController::class,'Rentalreturn']);

@@ -1,6 +1,9 @@
 @extends('layouts.rentbike')
 @section('title','Profile')
 @section('content')
+@php
+
+@endphp
 <style>
   .btn-file {
     position: relative;
@@ -399,7 +402,8 @@ h2{color:#0b56a8;}
            
                 <td>
                 <div class="btn-group" role="group" aria-label="Button group example">
-                  <button class="btn-xs btn-info"  type="button" data-toggle="modal" data-target="#Return">
+                  
+                  <button class="btn-xs btn-info"  type="button" id="rent{{$data->rental_id}}">
                   Return</button>
                   &nbsp;
                   <button class="btn-xs btn-success"  type="button" data-toggle="modal" data-target="#Extend">
@@ -420,16 +424,16 @@ h2{color:#0b56a8;}
                     
                       <div class="modal-body">
                       <div class="form-group">
-                      <form name="rental" method="get">
-                  @csrf
-                  @method('post')
+                    
                       <label for="comment">Report Issues:</label>
-                      <textarea class="form-control" rows="5" id="return"name="return"></textarea>
+                      <textarea class="form-control" rows="5" id="issues" name="issues"></textarea>
                       </div>
+                      <input type="hidden" id="rental_id" />
+
                       </div>
                       <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Return</button>
-                        </form>
+                        <button type="button" class="btn btn-primary" id = "submit-return">Return</button>
+                        
                       </div>
                     </div>
                   </div>
@@ -583,9 +587,7 @@ h2{color:#0b56a8;}
 value="{{Auth::user()->id}}"
 id="user_id"
 />
-<script>
-  
-</script>
+
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
    const  Toast = Swal.mixin({
@@ -734,15 +736,22 @@ setInterval(function() { makeTimer(); }, 1000);
 
  
 
-<script>
- var end = new Array[('')];
- var countDownDate = new Date("{{($data->rent_end_date)}}")
+<script> 
+@foreach($rental as $key=>$data)
+  $('#rent{{$data->rental_id}}').click(function(){
+    $('#rental_id').val('{{$data->rental_id}}')
+   $('#Return').modal('toggle')
+  })
+@endforeach
+
+ /*//var end = new Array[('')];
+
 
 // Update the count down every 1 second
 var x = setInterval(function() {
 
   // Get today's date and time
-  var now = new Date({{($data->rent_start_date)}}).getTime();
+
 
   // Find the distance between now and the count down date
   var distance = countDownDate - now;
@@ -754,15 +763,36 @@ var x = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="demo"
-  document.getElementById("demo{{($data->rental_id)}}").innerHTML = days + "d " + hours + "h "
+
   + minutes + "m " + seconds + "s ";
 
   // If the count down is finished, write some text
   if (distance < 0) {
     clearInterval(x);
-    document.getElementById("demo{{($data->rental_id)}}").innerHTML = "EXPIRED";
+
   }
-}, 1000);
+}, 1000);*/
+
+$('#submit-return').click(function(){
+  let formdata = new FormData()
+  formdata.append('rental_id',$('#rental_id').val())
+  formdata.append('issues',$('#issues').val())
+  formdata.append('user_id',$('#user_id').val())
+  axios.post(url+'/submit-return',formdata).then(res =>{
+    console.log(res)
+    if(res.status === 200)
+    {
+      $('#Return').modal('toggle')
+      Swal.fire(
+                res.data.message,
+  
+                )
+      $('#rent'+res.data.data.id).hide() 
+         
+
+    }
+  })
+})
 </script>  
 
 

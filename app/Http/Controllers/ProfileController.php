@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\RentalReturn;
 class ProfileController extends Controller
 {
     /**
@@ -65,6 +66,17 @@ class ProfileController extends Controller
             }
     
     
+        }
+
+        public function Rentalreturn(Request $request)
+        {
+                $return = new RentalReturn;
+                $return->user_id = $request->user_id;
+                $return->rental_id = $request->rental_id;
+                $return->returned_status =0;
+                $return->issues = $request->issues;
+                $return->save();
+                return response()->json(['message' => 'Return successful.','data'=>$return],200);
         }
   
     }

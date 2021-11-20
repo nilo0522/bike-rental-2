@@ -12,6 +12,7 @@ use Auth;
 use Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 class CheckoutController extends Controller
 {
     //
@@ -21,7 +22,8 @@ class CheckoutController extends Controller
     {   
         // Enter Your Stripe Secret
        $stripekey= env('STRIPE_PUBLIC_KEY');
-        \Stripe\Stripe::setApiKey('sk_test_51JeXT6E8vw61AZaQLjaHy3SUO9iv2tLPKyDC8vfIQKdB1Vg2ST3iQVR18l7uiIsYVll4QQzxCHO4rGyWTi0u90jO00MkekBmOK');
+       $secretkey = env('STRIPE_SECRET_KEY');
+        \Stripe\Stripe::setApiKey($secretkey);
     
 
         
@@ -30,11 +32,11 @@ class CheckoutController extends Controller
     
    
 
-   /*  $bike= DB::table('rentals')->insertGetId([
+ /*  $bike= Rental::create([
         'user_id'=>$request->input('user_id'),
         'bike_id'=>$request->input('bike_id'),
-        'rent_start_date'=>$request->input('rent_start_date'),
-        'rent_end_date'=>$request->input('rent_end_date'),
+        'rent_start_date'=> Carbon::create($request->rent_start_date)->format('Y-m-d h:i a'),
+        'rent_end_date'=>Carbon::create($request->rent_end_date)->format('Y-m-d h:i a'),
         'sub_total'=>$request->input('sub_total'),
         'total_amount'=>$request->input('total_amount'),
         'fullpayment'=>$request->input('Totxdays'),
@@ -44,9 +46,12 @@ class CheckoutController extends Controller
         'pickup'=>$request->input('pickup'),
        
 ]);*/
-    $bike = Rental::create($request->all());
 
-      Log::info('bike_id '.$bike->id);
+   $bike = Rental::create($request->all());
+   $bike->update([
+       'rent_start_date'=> Carbon::create($request->rent_start_date)->format('Y-m-d h:i a'),
+       'rent_end_date'=>Carbon::create($request->rent_end_date)->format('Y-m-d h:i a'),
+   ]);
 
 $bike = DB::getPdo()->lastInsertId();
 $latest = DB::table('rentals')
