@@ -50,11 +50,21 @@ class ProfileController extends Controller
 
     public function store(Request $request)
     {   
-            $contents=$request->prof_img2;
-            $name=$contents->getClientOriginalName();
-            $contents->move('uploads',$name);
-       $user = User::find($request->id)->update($request->all());
-       $user = User::find($request->id);
-            return response()->json(['user' =>$user,'message'=> 'Update successfully' ]);
+      
+        $user = User::find($request->id)->update($request->all());
+        $user = User::find($request->id);
+        $user->save();
+            if($contents=$request->file('prof_img2')){
+                $name=$contents->getClientOriginalName();
+                $contents->move('uploads',$name);
+    
+                
+            
+                return response()->json(['user' =>$user,'message'=> 'Update successfully' ]);
+                return redirect(url('../account'));
+            }
+    
+    
+        }
+  
     }
-}

@@ -21,7 +21,7 @@ class CheckoutController extends Controller
     {   
         // Enter Your Stripe Secret
        $stripekey= env('STRIPE_PUBLIC_KEY');
-        \Stripe\Stripe::setApiKey( env('STRIPE_SECRET_KEY'));
+        \Stripe\Stripe::setApiKey('sk_test_51JeXT6E8vw61AZaQLjaHy3SUO9iv2tLPKyDC8vfIQKdB1Vg2ST3iQVR18l7uiIsYVll4QQzxCHO4rGyWTi0u90jO00MkekBmOK');
     
 
         
@@ -30,22 +30,23 @@ class CheckoutController extends Controller
     
    
 
- /*   $bike= DB::table('rentals')->insertGetId([
+   /*  $bike= DB::table('rentals')->insertGetId([
         'user_id'=>$request->input('user_id'),
         'bike_id'=>$request->input('bike_id'),
         'rent_start_date'=>$request->input('rent_start_date'),
         'rent_end_date'=>$request->input('rent_end_date'),
-        'sub_total'=>$request->input('sub'),
+        'sub_total'=>$request->input('sub_total'),
         'total_amount'=>$request->input('total_amount'),
         'fullpayment'=>$request->input('Totxdays'),
         'rentdays'=>$request->input('num_nights'),
-        'rent_status'=>$request->rent_status,
+        'rent_status'=>$request->input('rent_status'),
         'remarks'=>$request->input('remarks'), 
+        'pickup'=>$request->input('pickup'),
        
 ]);*/
-      $bike = Rental::create($request->all());
+    $bike = Rental::create($request->all());
 
-      Log::info('bike-id '.$bike->id);
+      Log::info('bike_id '.$bike->id);
 
 $bike = DB::getPdo()->lastInsertId();
 $latest = DB::table('rentals')
@@ -105,5 +106,4 @@ $latest = DB::table('rentals')
 }
 
  //makatext na
-
 

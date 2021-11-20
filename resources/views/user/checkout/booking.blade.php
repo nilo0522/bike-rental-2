@@ -1,30 +1,25 @@
 @extends('layouts.rentbike')
-
+@section('title','Booking')
 
 @section('content')
 
 
 <style>
-
-
 div.elem-group {
   margin: 15px 0;
 }
-
 div.elem-group.inlined {
   width: 49%;
   display: inline-block;
   float: left;
   margin-left: 1%;
 }
-
 label {
   display: block;
   font-family: 'Nanum Gothic';
   padding-bottom: 10px;
   font-size: 1.25em;
 }
-
 input, select, textarea {
   border-radius: 2px;
   border: 2px solid #777;
@@ -34,20 +29,16 @@ input, select, textarea {
   width: 100%;
   padding: 10px;
 }
-
 div.elem-group.inlined input {
   width: 100%;
   display: inline-block;
 }
-
 textarea {
   height: 95px;
 }
-
 hr {
   border: 1px dotted #ccc;
 }
-
 button {
   height: 50px;
   background: orange;
@@ -58,17 +49,10 @@ button {
   border-radius: 4px;
   cursor: pointer;
 }
-
 button:hover {
   border: 2px solid black;
 }
-
-
 /**CALENDAR */
-
-
-
-
   </style>
 
 <div class="container">
@@ -86,7 +70,11 @@ button:hover {
                         <h3 class="card-title">Personal Details</h3>
                     </div>
                     <div class="card-body">
+                    <form id="booking-form" action="{{route('checkout')}}" method="POST" enctype=multipart/form-data>
+                        @csrf   
+                        @method('GET')  
                           <div class="form-group">
+                       
                             <label for="name">Name</label>
                             <input class="form-control"  type="text" id="fname" name="fname"  value="{{ Auth::user()->fname }} {{Auth::user()->lname}}" pattern=[A-Z\sa-z]{3,20} required>
                           </div>
@@ -101,51 +89,70 @@ button:hover {
                           </div>
                     </div>
                 </div>
+
+
+ 
+
+
                 <div class="sidebar_widget" id="div-total">
-                  
-                  <span>₱</span>
-                  <input style="width:60px;border:none transparent"id="Totxdays" name="fullpayment">
+               
                   @foreach($bike_details as $bike)
-                  <span>₱</span>
-                  <input style="width:60px;border:none transparent"id="bikeprice" name="bikeprice" value="{{$bike->bikeprice}}">
-             
-             
+                  <strong>Bike Price/ Day:</strong>
+                  <span>₱<input style="width:60px;border:none transparent"id="bikeprice" name="bikeprice" value="{{$bike->bikeprice}}"></span>
+                  
                   <div class="col-xs-12">Rent Days: <input style="width:50px;border:none transparent" name = "rentdays" id="num_nights"></label></div>
                  
-                      <div class="form-group"><hr /></div>
-                      <div class="form-group">
+                   
+             
                       
-                      
-                              <strong>Subtotal  </strong><small>(60% Payment)</small>
+                    
+                               
+                              
+                                    <input type ="hidden"style="width:60px;border:none transparent" id="sub_total" name="sub_total" >
+                       
+                          <div class="col-xs-12">
+                              <div>Full Payment:  </div>
                               <div class="pull-right"><span>₱</span>
-                                  <input style="width:60px;border:none transparent"id="sub" name="sub_total" >
-                      
+                             
+                              <input style="width:60px;border:none transparent"id="Totxdays" name="fullpayment"> </div>
                           </div>
+
+
                           <div class="col-xs-12">
                           <div class="form-group"><hr /></div>
-                              <strong>Transaction Fee</strong>
-                              
+                              <div>Transaction Fee:</div>
                               <div class="pull-right"><span>₱</span>
                               <input style="width:60px;border:none transparent"id="transfee" name="transfee"></div>
                           </div>
-                      </div>
+
+                         
+                     
                       <div class="form-group"><hr /></div>
                       <div class="form-group">
                           <div class="col-xs-12">
                           <div class="form-group"><hr /></div>
-                              <strong>Book Total</strong>
+                              <strong>Book Total:</strong>
                               <div class="pull-right"><span>₱</span>
                               <input style="width:60px;border:none transparent"id="total_amount" name="total_amount">
                           </div>
                           </div>
                       </div>
-    <button type="button" class="btn"> 
+   <div>
+   <button type="button" class="btn"> 
         <a href="../bikedetail/{{$bike->id}}" style="color:inherit;   text-decoration: none;"> Back </a>
       </button>
       &nbsp;
-      <button class = "justify"type="submit">Book the Bike</button>  
-                                                 
-   
+      <button type="submit" class="btn"> 
+        <a  style="color:inherit;   text-decoration: none;">Procced Payment </a>
+      </button>
+     
+   </div>
+                                            
+   <input type="hidden"value="{{Auth::user()->id}}"id="user_id" name="user_id"/>
+   <input type="hidden"value="1"id="rent_status"name="rent_status"/>
+   <input type="hidden"value="Ongoing"id="remarks"name="remarks"/>
+    <input type="hidden" value="{{$bike->id}}"id="bike_id"name="bike_id"/>
+  
   @endforeach  
                 </div>
             </div>
@@ -157,11 +164,11 @@ button:hover {
                 <div class="card-body">
                   <div class="form-group">
                     <label><strong>Start Date:</strong></label>
-                    <input  name="rent_start_date" id="rent_start_date" class="form-control" autocomplete="off"  required />
+                    <input  name="rent_start_date" id="rent_start_date" class="form-control" autocomplete="off" data-date-format="yyyy-mm-dd hh:ii"  required />
                   </div>
                   <div class="form-group">
                     <label><strong>Return Date:</strong></label>
-                    <input  name="rent_end_date" id="rent_end_date" class="form-control"  required  autocomplete="off"/>
+                    <input  name="rent_end_date" id="rent_end_date" class="form-control"  required  autocomplete="off"data-date-format="yyyy-mm-dd hh:ii"/>
                   </div>
                   <div class="form-group">
                     <label for="pickup">Pick up address</label>
@@ -183,7 +190,8 @@ button:hover {
      
 
 
-         
+
+</form> 
 
 
 
@@ -202,15 +210,15 @@ button:hover {
               $('#div-total').show()
                 var start = $('#rent_start_date').datepicker('getDate');
                 var end = $('#rent_end_date').datepicker('getDate');
-                var bikeprice = $('#bikeprice').val()
+                var bikeprice = $('#bikeprice').val();
                 
                 if (!start || !end) return;
                 var days = (end - start) / 1000 / 60 / 60 / 24;
                 $('#num_nights').val(days);
                 $('#Totxdays').val(days* bikeprice);
                 var Totxdays = document.getElementById("Totxdays").value;
-                $('#sub').val(Totxdays *0.6);
-                var sub = document.getElementById("sub").value;
+                $('#sub_total').val(Totxdays);
+                var sub = document.getElementById("sub_total").value;
                 $('#transfee').val(sub*0.10);
                 var transfee = document.getElementById("transfee").value;
                 var total = parseInt(sub) + parseInt(transfee);
@@ -220,6 +228,7 @@ button:hover {
             $("#rent_start_date").datepicker({
                 dateFormat: 'yy-mm-dd',
                 onSelect: showDays,
+               
                 minDate: dateToday,
                 onSelect: function() {
              dateSelect($('#rent_start_date').val())
