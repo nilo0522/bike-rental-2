@@ -142,7 +142,7 @@ h2{color:#0b56a8;}
     <!-- KAILANGAN MUGANA PAG TUPLOKON -->   
              
               @php
-                    $img = Auth::user()->prof_img ? : "uploads/user.png";
+                    $img = Auth::user()->prof_img ? : "uploads/1.jpg";
                 @endphp
                 <img id='img-upload'  src = '{{asset($img)}}' />
                 <input type="hidden"

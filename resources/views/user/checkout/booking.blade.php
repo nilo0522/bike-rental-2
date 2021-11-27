@@ -203,6 +203,27 @@ button:hover {
 
     
 <script >
+
+var dateRange = [];           // array to hold the range
+
+// populate the array
+var rental =  @json($rental);
+
+  $.each(rental, function(key,value) {
+                    for (var d = new Date(value.rent_start_date); d <= new Date(value.rent_end_date); d.setDate(d.getDate() + 1)) {
+    dateRange.push($.datepicker.formatDate('yy-mm-dd', d));
+}
+                }); 
+
+console.log(dateRange)
+
+
+function disableDates(date) {
+  var string = $.datepicker.formatDate('yy-mm-dd', date);
+  return [dateRange.indexOf(string) == -1];
+}
+
+
      $('#div-total').hide()
      $('#personal').show()
             function showDays() {
@@ -228,7 +249,7 @@ button:hover {
             $("#rent_start_date").datepicker({
                 dateFormat: 'yy-mm-dd',
                 onSelect: showDays,
-               
+                beforeShowDay: disableDates,
                 minDate: dateToday,
                 onSelect: function() {
              dateSelect($('#rent_start_date').val())
@@ -258,8 +279,13 @@ button:hover {
                 dateFormat: 'yy-mm-dd',
                 onSelect:showDays,
                 minDate: newdate,
+                beforeShowDay: disableDates,
             })
             }
-      </script>  
-
+      </script> 
+@if(session('error')) 
+<script>
+alert('error');
+</script>
+@endif
 @endsection

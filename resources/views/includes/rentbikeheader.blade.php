@@ -27,7 +27,7 @@
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->fname }}
+                                        {{ Auth::user() ? Auth::user()->fname : $user->fname}}
                                     </a>
 
 
@@ -67,11 +67,10 @@
           <li><a href="my-testimonials.php">My Testimonial</a></li>
             <li><a href="logout.php">Sign Out</a></li> -->
 
-                                <li><a href="../account/{{Auth::user()->id}}">Account</a>
+                                <li><a href="../account/{{Auth::user() ? Auth::user()->id : $user->id}}">Account</a>
                                 </li>
 
-                              <!--  <li><a href="../myposts/{{Auth::user()->id}}" >My Posts</a></li>
--->
+                             
                                 <li><a onclick="event.preventDefault();
              document.getElementById('logout-form').submit();" href="{{ route('logout') }}" data-toggle="modal"
                                         data-dismiss="modal">Sign Out</a></li>

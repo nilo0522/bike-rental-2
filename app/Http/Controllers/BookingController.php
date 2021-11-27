@@ -16,7 +16,8 @@ class BookingController extends Controller
     public function booking(Request $request,$id)
     {   
         $bike_details = BikeDetail::where('id', $id)->get();
-        return view('user.checkout.booking',compact('bike_details'));
+        $rental = Rental::where('bike_id',$id)->get();
+        return view('user.checkout.booking',compact('bike_details','rental'));
   
     }
 }

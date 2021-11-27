@@ -13,6 +13,7 @@ use Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\View;
 class CheckoutController extends Controller
 {
     //
@@ -46,39 +47,48 @@ class CheckoutController extends Controller
         'pickup'=>$request->input('pickup'),
        
 ]);*/
+$filter =Rental::where('bike_id',$request->bike_id)->where('rent_start_date', '<=', $request->rent_end_date)
+->where('rent_end_date', '>=', $request->rent_start_date)
+->count();
 
-   $bike = Rental::create($request->all());
-   $bike->update([
-       'rent_start_date'=> Carbon::create($request->rent_start_date)->format('Y-m-d h:i a'),
-       'rent_end_date'=>Carbon::create($request->rent_end_date)->format('Y-m-d h:i a'),
-   ]);
-
-$bike = DB::getPdo()->lastInsertId();
-$latest = DB::table('rentals')
-->join('bike_details', 'rentals.bike_id', '=', 'bike_details.id')
-->select('bike_details.*', 'rentals.*')
-->where('rentals.rental_id','=',$bike)
-->get();
-    $transfee =$request->input('transfee');
-    $amount =$request->input('total_amount');
+if(!$filter)
+{
    
-   /* $total = $request->input('total');
-    $amount = $request->$total;
-*/
-        $amount*=100;
-        $payment_intent = \Stripe\PaymentIntent::create([
-			'amount' => round($amount*100),
-			'currency' => 'PHP',
-			'description' => 'Payment From Bike Rental',
-			'payment_method_types' => ['card'],
-		]);
-        //FOR BIKES
-		$intent = $payment_intent->client_secret;
-        Log::info($payment_intent);
-		return view('user.checkout.credit-card',compact('intent','latest','transfee'))->with('stripekey',$stripekey);
-    }
-
+    $bike = Rental::create($request->all());
+   
+ $user = User::find($request->user_id)->first();
+ $bike = DB::getPdo()->lastInsertId();
+ $latest = DB::table('rentals')
+ ->join('bike_details', 'rentals.bike_id', '=', 'bike_details.id')
+ ->select('bike_details.*', 'rentals.*')
+ ->where('rentals.rental_id','=',$bike)
+ ->get();
+     $transfee =$request->input('transfee');
+     $amount =$request->input('total_amount');
     
+    /* $total = $request->input('total');
+     $amount = $request->$total;
+ */
+         $amount*=100;
+         $payment_intent = \Stripe\PaymentIntent::create([
+             'amount' => round($amount*100),
+             'currency' => 'PHP',
+             'description' => 'Payment From Bike Rental',
+             'payment_method_types' => ['card'],
+         ]);
+         //FOR BIKES
+         $intent = $payment_intent->client_secret;
+        
+         return View::make('user.checkout.credit-card',compact('intent','latest','transfee','user','stripekey'));
+}
+return redirect()->back()->with('error','dasd');
+
+    }
+    
+    public function Viewcheckout()
+    {
+        return view('user.checkout.credit-card');
+    }
 
     public function afterPayment(Request $request)
     {

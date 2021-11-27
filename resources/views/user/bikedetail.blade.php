@@ -94,11 +94,11 @@
 <br>
 <section id="listing_img_slider">
 
-<div><img src="../uploads/{{$data->bikepic}}" class="img-responsive" alt="image" width="950" height="600"></div>
+<div><img src="{{asset('uploads/'.$data->bikepic)}}" class="img-responsive" alt="image" width="950" height="600"></div>
 <br>
-<div><img src="../uploads/{{$data->bikepic}}" class="img-responsive" alt="image" width="950" height="600"></div>
+<div><img src="{{asset('uploads/'.$data->bikepic)}}" class="img-responsive" alt="image" width="950" height="600"></div>
 <br>
-<div><img src="../uploads/{{$data->bikepic}}" class="img-responsive" alt="image" width="950" height="600"></div>
+<div><img src="{{asset('uploads/'.$data->bikepic)}}" class="img-responsive" alt="image" width="950" height="600"></div>
 
 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

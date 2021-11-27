@@ -65,7 +65,7 @@ body {
               <div class="form-group">
                 
                 <label for="username">Full name (on the card)</label>
-                <input type="text" name="username" value ="{{ Auth::user()->fname }} {{Auth::user()->lname}}" readonly class="form-control">
+                <input type="text" name="username" value ="" readonly class="form-control">
               </div>
               <div class="form-group">
                 <label for="cardNumber">Card number</label>
@@ -130,7 +130,7 @@ body {
               <dd>{{$bike->total_amount}}</dd>
             </dl>
                                                 <input style="width:60px;border:none transparent"type = "hidden"id="rental_id" name="rental_id" value="{{$bike->rental_id}}" required >
-                                                <input style="width:60px;border:none transparent"type = "hidden"id="user_id" name="user_id" value="{{Auth::user()->id}}" required >
+                                                <input style="width:60px;border:none transparent"type = "hidden"id="user_id" name="user_id" value="" required >
                                                 <input style="width:60px;border:none transparent"type = "hidden"id="payment_type" name="payment_type" value="1" required >
                                                 <input style="width:60px;border:none transparent"type = "hidden"id="paid_by" name="paid_by" value="card" required >
                                                 <input style="width:60px;border:none transparent"type = "hidden"id="remarks" name="remarks" value="Ongoing" required >
