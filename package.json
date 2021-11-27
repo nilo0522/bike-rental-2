@@ -26,7 +26,6 @@
     },
     "dependencies": {
         "@stripe/stripe-js": "^1.18.0",
-        "fullcalendar": "^5.10.1",
         "next": "^11.1.2",
         "stripe": "^8.176.0"
     }

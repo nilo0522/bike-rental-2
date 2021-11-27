@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\RentalReturn;
 class ProfileController extends Controller
 {
     /**
@@ -50,11 +51,32 @@ class ProfileController extends Controller
 
     public function store(Request $request)
     {   
-            $contents=$request->prof_img2;
-            $name=$contents->getClientOriginalName();
-            $contents->move('uploads',$name);
-       $user = User::find($request->id)->update($request->all());
-       $user = User::find($request->id);
-            return response()->json(['user' =>$user,'message'=> 'Update successfully' ]);
+      
+        $user = User::find($request->id)->update($request->all());
+        $user = User::find($request->id);
+        $user->save();
+            if($contents=$request->file('prof_img2')){
+                $name=$contents->getClientOriginalName();
+                $contents->move('uploads',$name);
+    
+                
+            
+                return response()->json(['user' =>$user,'message'=> 'Update successfully' ]);
+                return redirect(url('../account'));
+            }
+    
+    
+        }
+
+        public function Rentalreturn(Request $request)
+        {
+                $return = new RentalReturn;
+                $return->user_id = $request->user_id;
+                $return->rental_id = $request->rental_id;
+                $return->returned_status =0;
+                $return->issues = $request->issues;
+                $return->save();
+                return response()->json(['message' => 'Return successful.','data'=>$return],200);
+        }
+  
     }
-}

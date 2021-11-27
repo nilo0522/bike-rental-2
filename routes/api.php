@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,3 +26,5 @@ Route::post('register',[LoginController::class,'signup']);
 Route::post('update',[ProfileController::class,'update'])->name('update');
 
 Route::post('save-profile',[ProfileController::class,'store']);
+Route::post('submit-return',[ProfileController::class,'Rentalreturn']);
+Route::post('pre-checkout',[CheckoutController::class, 'checkout'])->name('checkout');

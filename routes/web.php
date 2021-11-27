@@ -12,7 +12,7 @@ use App\Http\Controllers\FrontpageController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CheckoutController;
-
+use App\Http\Controllers\HomeControllerV2;
 use Illuminate\Http\Request;
 
 /*
@@ -42,9 +42,7 @@ use Illuminate\Http\Request;
 		return view('user.contact');
 	});
 	
-	
-	
-	
+	Route::get('dashboard',[HomeControllerV2::class,'index']);
 	
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');

@@ -19,8 +19,8 @@ class CreateRentalsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('bike_id');
             $table->foreign('bike_id')->references('id')->on('bike_details');
-            $table->date('rent_start_date');
-            $table->date('rent_end_date');
+            $table->string('rent_start_date');
+            $table->string('rent_end_date');
             $table->float('sub_total');
             $table->float('fullpayment');
             $table->float('total_amount');
