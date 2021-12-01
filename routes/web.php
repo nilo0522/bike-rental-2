@@ -30,10 +30,23 @@ use Illuminate\Http\Request;
 	});
 	
 
+<<<<<<< HEAD
 	
 	Route::get('dashboard',[HomeControllerV2::class,'index']);
 	
 	
+=======
+	Auth::routes();
+	Route::get('about-us', function () {
+		return view('user.about-us');
+	});
+
+	Route::get('contact', function () {
+		return view('user.contact');
+	});
+	
+	Route::get('dashboard',[HomeControllerV2::class,'index']);
+>>>>>>> 865a1c0904332533bbc1b8a9f808ba870324f8e5
 	
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');

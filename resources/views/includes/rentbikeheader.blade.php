@@ -84,8 +84,23 @@
                                 aria-expanded="false"><i class="fa fa-user-circle" aria-hidden="true"></i>
                                 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                             <ul class="dropdown-menu">
+<<<<<<< HEAD
                                 <li><a href="../account/{{Auth::user()->id}}">Account</a>
                                 </li>
+=======
+
+                <!-- <li><a href="profile.php">Profile Settings</a></li>
+              <li><a href="update-password.php">Update Password</a></li>
+            <li><a href="my-booking.php">My Booking</a></li>
+            <li><a href="post-testimonial.php">Post a Testimonial</a></li>
+          <li><a href="my-testimonials.php">My Testimonial</a></li>
+            <li><a href="logout.php">Sign Out</a></li> -->
+
+                                <li><a href="../account/{{Auth::user() ? Auth::user()->id : $user->id}}">Account</a>
+                                </li>
+
+                             
+>>>>>>> 865a1c0904332533bbc1b8a9f808ba870324f8e5
                                 <li><a onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();" href="{{ route('logout') }}" data-toggle="modal"
                                         data-dismiss="modal">Sign Out</a></li>

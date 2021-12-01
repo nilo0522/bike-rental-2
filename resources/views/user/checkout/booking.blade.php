@@ -216,6 +216,32 @@ function disableDates(date) {
   return [dateRange.indexOf(string) == -1];
 }
 
+<<<<<<< HEAD
+=======
+    
+<script >
+
+var dateRange = [];           // array to hold the range
+
+// populate the array
+var rental =  @json($rental);
+
+  $.each(rental, function(key,value) {
+                    for (var d = new Date(value.rent_start_date); d <= new Date(value.rent_end_date); d.setDate(d.getDate() + 1)) {
+    dateRange.push($.datepicker.formatDate('yy-mm-dd', d));
+}
+                }); 
+
+console.log(dateRange)
+
+
+function disableDates(date) {
+  var string = $.datepicker.formatDate('yy-mm-dd', date);
+  return [dateRange.indexOf(string) == -1];
+}
+
+
+>>>>>>> 865a1c0904332533bbc1b8a9f808ba870324f8e5
      $('#div-total').hide()
      $('#personal').show()
             function showDays() {
@@ -274,14 +300,21 @@ function disableDates(date) {
                 beforeShowDay: disableDates,
             })
             }
+<<<<<<< HEAD
 
            
       </script>  
 
+=======
+      </script> 
+>>>>>>> 865a1c0904332533bbc1b8a9f808ba870324f8e5
 @if(session('error')) 
 <script>
 alert('error');
 </script>
 @endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> 865a1c0904332533bbc1b8a9f808ba870324f8e5
 @endsection

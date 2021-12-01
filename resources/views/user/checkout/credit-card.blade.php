@@ -66,7 +66,7 @@ body {
               <div class="form-group">
                 
                 <label for="username">Full name (on the card)</label>
-                <input type="text" name="username" value ="{{ Auth::user()->fname }} {{Auth::user()->lname}}" readonly class="form-control">
+                <input type="text" name="username" value ="" readonly class="form-control">
               </div>
               <div class="form-group">
                 <label for="cardNumber">Card number</label>
@@ -132,6 +132,7 @@ body {
               <dt>Total Amount</dt>
               <dd><span>₱</span> {{$bike->total_amount}}</dd>
             </dl>
+<<<<<<< HEAD
                                                 <input style="border:none transparent"type = "hidden"id="rental_id" name="rental_id" value="{{$bike->rental_id}}" required >
                                                 <input style="border:none transparent"type = "hidden"id="user_id" name="user_id" value="{{Auth::user()->id}}" required >
                                                 <input style="border:none transparent"type = "hidden"id="payment_type" name="payment_type" value="1" required >
@@ -139,6 +140,14 @@ body {
                                                 <input style="border:none transparent"type = "hidden"id="remarks" name="remarks" value="Ongoing" required >
                                                 <input style="border:none transparent"type = "hidden"id="transfee" name="transfee" value="{{$transfee}}" required >
             <p class="text-muted">Please Check if the Information is right if not you may reset the <br><strong>Transaction Process</strong>.
+=======
+                                                <input style="width:60px;border:none transparent"type = "hidden"id="rental_id" name="rental_id" value="{{$bike->rental_id}}" required >
+                                                <input style="width:60px;border:none transparent"type = "hidden"id="user_id" name="user_id" value="" required >
+                                                <input style="width:60px;border:none transparent"type = "hidden"id="payment_type" name="payment_type" value="1" required >
+                                                <input style="width:60px;border:none transparent"type = "hidden"id="paid_by" name="paid_by" value="card" required >
+                                                <input style="width:60px;border:none transparent"type = "hidden"id="remarks" name="remarks" value="Ongoing" required >
+            <p class="text-muted">Please Check if the Information is right if not you may reset the <strong>Transaction Process</strong>.
+>>>>>>> 865a1c0904332533bbc1b8a9f808ba870324f8e5
             </p>
           </div>
           @endforeach

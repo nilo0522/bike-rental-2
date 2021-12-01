@@ -185,7 +185,11 @@ padding: 0;
              
     <!-- KAILANGAN MUGANA PAG TUPLOKON -->   
              
+<<<<<<< HEAD
                 @php
+=======
+              @php
+>>>>>>> 865a1c0904332533bbc1b8a9f808ba870324f8e5
                     $img = Auth::user()->prof_img ? : "uploads/1.jpg";
                 @endphp
                 <img id='img-upload'  src = '{{asset($img)}}' />
