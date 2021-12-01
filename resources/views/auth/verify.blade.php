@@ -6,21 +6,22 @@
       <div class="col-lg-7 col-md-8">
           <div class="card card-login card-hidden mb-3">
             <div class="card-header card-header-primary text-center">
-              <p class="card-title"><strong>{{ __('Verify Your Email Address') }}</strong></p>
+              <p class="card-title"><strong>{{ __('Waiting for Admin Confirmation or Approval') }}</strong></p>
             </div>
             <div class="card-body">
               <p class="card-description text-center"></p>
               <p>
                 @if (session('resent'))
                     <div class="alert alert-success" role="alert">
-                        {{ __('A fresh verification link has been sent to your email address.') }}
+                        {{ __('A fresh request has been sent to the admins please wait.') }}
                     </div>
                 @endif
                 
-                {{ __('Before proceeding, please check your email for a verification link.') }}
+                {{ __('It takes 2 - 3 hours to confirm your newly made account please be back in a while.') }}
                 
                 @if (Route::has('verification.resend'))
-                    {{ __('If you did not receive the email') }},  
+                    {{ __('If it takes to long please resend request') }},  
+                    <br>
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
                         <button type="submit" class="btn btn-lg btn-primary">{{ __('click here to resend request') }}</button>.

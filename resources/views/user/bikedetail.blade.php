@@ -1,16 +1,3 @@
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR--><!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR--><!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR--><!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
-<!-- UNDER REPAIR-->
 @extends('layouts.rentbike')
 @section('title','Bike Listing')
 
@@ -83,12 +70,13 @@
     color: #e6823c;
     border: 3px solid #c75b5b;
 }
+
   </style>
 
 <link rel="stylesheet" href="style.css" />
   
     <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap">
 
 @forelse ($BikeDetail as $key=>$data)
 <br>
@@ -149,8 +137,11 @@
                   <div class="col-sm-5">
                     <div class="card">
                       <div class="card-body">
-                          <div class="form-group">
+                          <div class="form-group text-center">
                             <h1>{{$data->bikename}}</h1>
+                            @foreach ($owner as $own)
+                          <small>{{$own->fname}} {{$own->lname}}</small>
+                          @endforeach
                             <h3>₱ {{$data->bikeprice}} / perday</h3>
                           </div>
                         </div> 
@@ -223,9 +214,6 @@
                 </div>
                 </div> 
         </section>
-  
-
-    
               </div>
  <!--ENDBooking Schedule-->
             </div>
@@ -244,19 +232,8 @@
           <p>Share: <a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> </p>
         </div>
         <div class="sidebar_widget">
-         
-          
 
-         
-        <a href="../booking/{{$data->id}} " class="btn">Book Now! <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-          
-</i></h5>
-          </div>
-         
-         
-
-        
-      
+         <a href="../booking/{{$data->id}} "  class="btn">Book Now! <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a></i></h5>
       </div>
       <!--/Side-Bar--> 
     </div>
@@ -334,6 +311,16 @@ function prevMonth() {
 }
 </script>
 
+  <script>
+  $( "#Owndisable" ).click(function() {
+    swal({
+  title: "It is Your Bike",
+  text: "You're Not Allowed To Book You Own Bike!",
+  icon: "error",
+  button: "X",
+});
+});
+  </script>
 @empty
             no data found
         @endforelse

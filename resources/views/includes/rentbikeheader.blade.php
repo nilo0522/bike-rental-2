@@ -1,3 +1,5 @@
+
+
 <header>
     <div class="default-header">
         <div class="container">
@@ -27,11 +29,10 @@
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->fname }}
+                                        {{ Auth::user() ? Auth::user()->fname : $user->fname}}
                                     </a>
-
-
                                 </li>
+                                
                             </ul>
                         </div>
 
@@ -53,27 +54,40 @@
                         class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
             </div>
             <div class="header_wrap">
+
+
+
+            <div class="user_login">
+                    <ul>
+                        <li class="dropdown"><a href="#" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"> <span class="badge badge-danger" style="background-color: red">{{ auth()->user()->unreadNotifications->count() }}</span><i class="fa fa-bell-o" aria-hidden="true"></i>
+                                <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <ul class="dropdown-menu">
+
+                            <!-- NOTIFCTION -->
+                                @forelse (auth()->user()->unreadNotifications as $notifications)
+                                <li><a class="dropdow-item">Returned Bike Issue: {{$notifications->data['issues']}}</a></li>
+                                @empty
+                                <li><a class="dropdow-item">No Notifications</a></li>
+                                @endforelse
+                                
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+
+
                 <div class="user_login">
                     <ul>
                         <li class="dropdown"> <a href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"><i class="fa fa-user-circle" aria-hidden="true"></i>
                                 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                             <ul class="dropdown-menu">
-
-                <!-- <li><a href="profile.php">Profile Settings</a></li>
-              <li><a href="update-password.php">Update Password</a></li>
-            <li><a href="my-booking.php">My Booking</a></li>
-            <li><a href="post-testimonial.php">Post a Testimonial</a></li>
-          <li><a href="my-testimonials.php">My Testimonial</a></li>
-            <li><a href="logout.php">Sign Out</a></li> -->
-
                                 <li><a href="../account/{{Auth::user()->id}}">Account</a>
                                 </li>
-
-                              <!--  <li><a href="../myposts/{{Auth::user()->id}}" >My Posts</a></li>
--->
                                 <li><a onclick="event.preventDefault();
-             document.getElementById('logout-form').submit();" href="{{ route('logout') }}" data-toggle="modal"
+                                        document.getElementById('logout-form').submit();" href="{{ route('logout') }}" data-toggle="modal"
                                         data-dismiss="modal">Sign Out</a></li>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
@@ -82,6 +96,7 @@
                         </li>
                     </ul>
                 </div>
+                
                 <div class="header_search">
                     <div id="search_toggle"><i class="fa fa-search" aria-hidden="true"></i></div>
                     <form action="#" method="get" id="header-search-form">

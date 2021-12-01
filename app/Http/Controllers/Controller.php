@@ -14,9 +14,7 @@ class Controller extends BaseController
 
     public function frontpage()
     {
-      
             $BikeDetail = BikeDetail::select('*')
-            ->where('id', '=', $id)
             ->get();
             return view('frontpage',compact('BikeDetail'));
         

@@ -8,7 +8,7 @@
   width: 60%;
   border: 3px solid #ff8c00;
   padding: 10px;
-  background-color: #ccccff!important;
+  background-color: #rgb(255 255 255 / 15%)!important;
 }
 
 body {
@@ -21,10 +21,10 @@ body {
   border-radius: 1rem;
 }
 </style>
- 
 @php
         $stripe_key = 'pk_test_51JeXT6E8vw61AZaQK5ctuXAVdQoRgEYElIy8gPwbW8pUG9c6TbD994Cs7ETqBfYv1JNFcDJnbxIWmHRXroWDsGq800glncb2Pe';
     @endphp
+
 
        
               
@@ -62,6 +62,7 @@ body {
           <div id="nav-tab-card" class="tab-pane fade show active">
             <p class="alert alert-success">Some text success or error</p>
             <form id="payment-form" action="{{route('checkout.credit-card')}}" method="POST">
+            @csrf 
               <div class="form-group">
                 
                 <label for="username">Full name (on the card)</label>
@@ -99,22 +100,24 @@ body {
                                     data-secret="{{ $intent }}">Confirm</button>
                                                 </div>
                                             </div>
-                                  </form>
+                                  
                                 </div>
           <!-- End -->
-      
+        <!-- KAILANGAN IPA thumanon ang CSS sa iamge result -->  <!-- End -->  <!-- End -->  <!-- End -->  <!-- End -->
           <!-- rental info -->
           @foreach($latest as $bike)
           <div id="nav-tab-bank" class="tab-pane fade">
             <h6>Bike rental details</h6>
             <dl>
-            <dt class="pull-right"><img class="img-responsive mx-auto d-block" style="width:300px;height:150px;" src="../uploads/{{$bike->bikepic}}" /></dt>
+            <dt ><img class="img-responsive " style=" display: block;
+ width:300px;height:150px; margin-right:25px" src="../uploads/{{$bike->bikepic}}" /></dt>
               <dt>Bike name</dt>
               <dd> {{$bike->bikename}}</dd>
+                    <input type="hidden" name ="bike_id" id="bike_id"value="{{$bike->id}}">
             </dl>
             <dl>
               <dt>Bike Price</dt>
-              <dd>{{$bike->bikeprice}}</dd>
+              <dd><span>₱</span> {{$bike->bikeprice}}</dd>
             </dl>
             <dl>
               <dt>Total days</dt>
@@ -123,30 +126,32 @@ body {
             <dl>
             <dl>
               <dt>Trasaction Fee</dt>
-              <dd>{{$transfee}}</dd>
+              <dd><span>₱</span> {{$transfee}}</dd>
             </dl>
             <dl>
               <dt>Total Amount</dt>
-              <dd>{{$bike->total_amount}}</dd>
+              <dd><span>₱</span> {{$bike->total_amount}}</dd>
             </dl>
-                                                <input style="width:60px;border:none transparent"type = "hidden"id="rental_id" name="rental_id" value="{{$bike->rental_id}}" required >
-                                                <input style="width:60px;border:none transparent"type = "hidden"id="user_id" name="user_id" value="{{Auth::user()->id}}" required >
-                                                <input style="width:60px;border:none transparent"type = "hidden"id="payment_type" name="payment_type" value="1" required >
-                                                <input style="width:60px;border:none transparent"type = "hidden"id="paid_by" name="paid_by" value="card" required >
-                                                <input style="width:60px;border:none transparent"type = "hidden"id="remarks" name="remarks" value="Ongoing" required >
-            <p class="text-muted">Please Check if the Information is right if not you may reset the <strong>Transaction Process</strong>.
+                                                <input style="border:none transparent"type = "hidden"id="rental_id" name="rental_id" value="{{$bike->rental_id}}" required >
+                                                <input style="border:none transparent"type = "hidden"id="user_id" name="user_id" value="{{Auth::user()->id}}" required >
+                                                <input style="border:none transparent"type = "hidden"id="payment_type" name="payment_type" value="1" required >
+                                                <input style="border:none transparent"type = "hidden"id="paid_by" name="paid_by" value="card" required >
+                                                <input style="border:none transparent"type = "hidden"id="remarks" name="remarks" value="Ongoing" required >
+                                                <input style="border:none transparent"type = "hidden"id="transfee" name="transfee" value="{{$transfee}}" required >
+            <p class="text-muted">Please Check if the Information is right if not you may reset the <br><strong>Transaction Process</strong>.
             </p>
           </div>
           @endforeach
           <!-- End -->
         </div>
         <!-- End -->
+        </form>
       </div>
     </div>
   </div>
 </div>
 </div>
- 
+</div>
     <script src="https://js.stripe.com/v3/"></script>
     <script>
       

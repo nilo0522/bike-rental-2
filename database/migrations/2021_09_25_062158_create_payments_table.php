@@ -20,9 +20,10 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('rental_id');
             $table->foreign('rental_id')->references('rental_id')->on('rentals');
             $table->integer('payment_type');
-            $table->date('payment_date')->useCurrent();
+            $table->string('payment_date');
             $table->float('transfee');
             $table->string('remarks');
+            $table->boolean('rstatus')->default(false);
             $table->timestamps();
         });
     }
