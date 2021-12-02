@@ -80,28 +80,38 @@
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="resentnewbike">
 
+        
+@php 
+$value = \App\Models\BikeDetail::select('*')->get();
+ 
+@endphp
 
 
+@forelse($value as $fkeys)
    <div class="col-list-3">
 <div class="recent-car-list">
-<div class="car-info-box"> <a href=" "><img src="admin/img/vehicleimages/knowledge_base_bg.jpg" class="img-responsive" alt="image"></a>
+<div class="car-info-box"> <a href="login "><img src="uploads/{{$fkeys->bikepic}}" class="img-responsive" alt="image"></a>
 <ul>
-<li><i class="fa fa-car" aria-hidden="true"></i>Petrol</li>
-<li><i class="fa fa-calendar" aria-hidden="true"></i>3453 Model</li>
-<li><i class="fa fa-user" aria-hidden="true"></i>7 seats</li>
+<li><i class="fa fa-cog" aria-hidden="true"></i>{{($fkeys->type)}}</li>
+<li><i class="fa fa-industry" aria-hidden="true"></i>{{$fkeys->bikemodel}}</li>
 </ul>
 </div>
 <div class="car-title-m">
-<h6><a href=" ">BMW , ytb rvtr</a></h6>
-<span class="price">$345345 /Day</span> 
+<h6><a href=" ">{{($fkeys->bikename)}}, {{($fkeys->bikename)}}</a></h6>
+<span class="price">₱ {{($fkeys->bikeprice)}}/Day</span> 
 </div>
 <div class="inventory_info_m">
-<p>vtretrvet</p>
+<p></p>
 </div>
 </div>
 </div>
-
-
+@empty
+<div class="section-header text-center">
+      <br>
+      <br>
+      <p>No Bikes Posted</p>
+    </div>
+@endforelse
 
 
  

@@ -1,14 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\BikeDetail;
 use App\Models\RentalReturn;
+use App\Models\Rental;
+use App\Models\Payment;
+use App\Notifications\Notify;
+use Illuminate\Support\Facades\Notification;
+
+
+
 class ProfileController extends Controller
 {
     /**
@@ -18,7 +25,8 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        return view('pages.edit');
+        $user = User::find(1);
+        return view('pages.edit',compact('user'));
     }
 
     /**
@@ -58,9 +66,6 @@ class ProfileController extends Controller
             if($contents=$request->file('prof_img2')){
                 $name=$contents->getClientOriginalName();
                 $contents->move('uploads',$name);
-    
-                
-            
                 return response()->json(['user' =>$user,'message'=> 'Update successfully' ]);
                 return redirect(url('../account'));
             }
@@ -70,13 +75,46 @@ class ProfileController extends Controller
 
         public function Rentalreturn(Request $request)
         {
+               //kani tanan User makareceive
+              
+               $user1= User::where('id',$request->user_id)-> first();
+               $user2= User::where('id',$request->owner_id) -> first();
+              
+////////////////////////////////////////////
                 $return = new RentalReturn;
-                $return->user_id = $request->user_id;
-                $return->rental_id = $request->rental_id;
+                $return->user_id =$request->user_id;
+                $return->payment_id = $request->payment_id;
                 $return->returned_status =0;
                 $return->issues = $request->issues;
+                $return->meetup = $request->meetup;
                 $return->save();
-                return response()->json(['message' => 'Return successful.','data'=>$return],200);
+                $return->id;
+                Payment::where('payment_id', $request->payment_id)
+                ->update(['rstatus' => 1]);
+            //WORKING nag notifaction
+                Notification::send($user2, new Notify($return,$user1));
+                return response()->json(['message' => 'Return successfully.','data'=>$return],200);
+        }
+
+
+
+
+        public function Confirmreturn(Request $request)
+        {
+               //kani tanan User makareceive
+                $user = User::all();
+////////////////////////////////////////////
+                $confirm =  Rentalreturn::where('returned_id', $request->returned_id)
+                ->update(['returned_status' => 1]);
+
+
+                ////Error
+                $avail=BikeDetail::where('id', $request->bike_id)
+                ->update(['bikestatus' => 0]);
+                $combined= $confirm + $avail;
+
+               
+                return response()->json(['message' => 'Confirm successfully Thank You.','data'=>$combined],200);
         }
   
     }

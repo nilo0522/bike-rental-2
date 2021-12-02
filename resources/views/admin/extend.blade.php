@@ -1,101 +1,77 @@
-@extends('layouts.app', ['activePage' => 'rentals', 'titlePage' => __('Rental Fees')])
+@extends('layouts.app', ['activePage' => 'extend', 'titlePage' => __('Extended Bikes')])
 
 @section('content')
+<!-- Datatable CSS -->
 <style>
-#payments{
+  #extend{
     width:100%;
     white-space: nowrap;
 }
-#payments_filter{
-    margin-right:1%;
-    width:50%;
-    float: right;
-    text-align: right;
+#extend_filter{
+  width:50%;
+  margin-right:1%;
+  float: right;
+  text-align: right;
 }
 }
-#payments_paginate{
+#extend_paginate{
   width: 100%;
+
 }
-
-
 </style>
-<!-- Datatable CSS -->
-
-<!-- jQuery Library -->
 <script src="{{asset('assets/js/jquery.min.js')}}"></script>
 
 <!-- Datatable JS -->
 <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
 
-<div class="content">
+    <div class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title ">Rental Fees</h4>
-            <p class="card-category"> Rental fee details and history of the customer</p>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-            <div class="large-12 columns">
-              <table class="display nowrap table" cellspacing="0"id="payments">
-                <thead class=" text-primary text-center">
-                
-                <th>
-                    RenterName
-                  </th>
-                  <th>
-                    Payment type
-                  </th>
-                  <th>
-                    Payment Date
-                  </th>
-                  <th class = "text-center">
-                  Trans Fee. 
-                  </th>
-                 
-               
-                </thead>
-                <tbody class='text-center'>
-                @forelse ($pay as $key=>$data)
-                  <tr>
-                  <td>
-                  {{$data->fname}}
-                    </td>
-                    <td>
-                    {{$data->paid_by}}
-                    </td>
-                    <td>
-                    {{$data->payment_date}}
-                    </td>
-                    <td class="td-actions text-center">
-                    {{$data->transfee}}
-                    </td>
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <h4 class="card-title ">Extend Bikes</h4>
+              <p class="card-category"> Here you can see extend bikes for users</p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+              <div class="large-12 columns">
+              <table class="display nowrap table" cellspacing="0"id="extend">
+                  <thead class="text-primary thead-outline text-center">
+                    <tr>
+                    <th>Renter Name</th>
+                    <th>Bike Name</th>
+                    <th>Extend Date</th>
+                    <th>Paid</th>
+                    
                   </tr>
-                
-                  @empty
-                   no data found
-                 @endforelse
-                </tbody>
-                <tfoot>
-            <tr>
-                <th colspan="4" cellspacing="0"style="text-align:right"></th>
-            </tr>
-  </tfoot>
-              </table>
+                  </thead>
+                  <tbody>
+                        <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                       
+                      </tr>
+                  </tbody>
+                  <tfoot>
+                <td colspan="3" style="text-align:right">Total Income:</th>
+             </tfoot>
+                </table>
+              
+              </div>
             </div>
           </div>
-        </div>
+        
       </div>
-</div>
     </div>
   </div>
 </div>
-
+<!-- Script -->
 <script type="text/javascript"> 
      $(document).ready(function(){
-      $('#payments').DataTable( {
+      $('#extend').DataTable( {
         "order": [[ 0, "asc" ]],
         "scrollX": false,
         "searching":true,
@@ -145,7 +121,7 @@
  
             // Total over all pages
             total = api
-                .column( 3 )
+                .column( 5 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -153,14 +129,14 @@
  
             // Total over this page
             pageTotal = api
-                .column( 3, { page: 'current'} )
+                .column( 5, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
  
             // Update footer
-            $( api.column( 3 ).footer() ).html('Total Income: '+
+            $( api.column( 5 ).footer() ).html(
                 '₱'+pageTotal +' ( ₱'+ total +' total)'
             );
         },   
@@ -168,5 +144,6 @@
 } );
 
       </script>
-   
-@endsection
+
+
+  @endsection

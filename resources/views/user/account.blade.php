@@ -1,9 +1,6 @@
 @extends('layouts.rentbike')
 @section('title','Profile')
 @section('content')
-@php
-
-@endphp
 <style>
   .btn-file {
     position: relative;
@@ -96,16 +93,63 @@ h2{color:#0b56a8;}
    float: center;
    text-align: center;
 }
+
+#return{
+    width:100%;
+    white-space: nowrap;
+}
+#return_filter{
+  width:50%;
+   float: right;
+   text-align: right;
+}
+}
+#return_paginate{
+    
+  width: 100%;
+   float: center;
+   text-align: center;
+}
+
+
+#earnings{
+    width:100%;
+    white-space: nowrap;
+}
+#earnings_filter{
+  width:50%;
+   float: right;
+   text-align: right;
+}
+}
+#earnings_paginate{
+    
+  width: 100%;
+   float: center;
+   text-align: center;
+}
+
+
 .label {
     display: inline-flex;
     margin-bottom: .5rem;
     margin-top: .5rem;
 }
 
-
+#map {
+    margin-top:15px;
+    margin-left: 65px;
+    width: 925px;
+    height: 550px;
+ }
+ body {
+height: 100%;
+margin: 0;
+padding: 0;
 }
-</style>
 
+</style>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/js/dataTables.bootstrap4.min.js')}}"></script>
 
@@ -117,7 +161,7 @@ h2{color:#0b56a8;}
           <li class="active"><a href="#tab1" data-toggle="tab">Profile</a></li>
           <li class=""><a href="#tab2" data-toggle="tab">My Bikes</a></li>
           <li class=""><a href="#tab3" data-toggle="tab">Upload Bikes</a></li>  
-          <li class=""><a href="#tab4" data-toggle="tab">My rentals</a></li>  
+          <li class=""><a href="#tab4" data-toggle="tab">My Rentals</a></li>  
           <li class=""><a href="#tab6" data-toggle="tab">Returned Bikes</a></li>
           <hr>
           <li class=""><a href="#tab5" data-toggle="tab">Maps</a></li> 
@@ -134,14 +178,18 @@ h2{color:#0b56a8;}
 <div class="tab-pane active text-style" id="tab1">
   <div class="col-sm-9 justify-content-center">
       <div class="col-sm-12">
-        <h2 style="margin-top: 5%">Profile</h2>
+        <h2 style="margin-top: 5%">Your Profile</h2>
           <div class="sidebar_widget" style="border:5px solid #337ab7">
             <div class="form-group col-sm-12">
               <div id="profile-container" class="float-right">
              
     <!-- KAILANGAN MUGANA PAG TUPLOKON -->   
              
+<<<<<<< HEAD
+                @php
+=======
               @php
+>>>>>>> 865a1c0904332533bbc1b8a9f808ba870324f8e5
                     $img = Auth::user()->prof_img ? : "uploads/1.jpg";
                 @endphp
                 <img id='img-upload'  src = '{{asset($img)}}' />
@@ -256,7 +304,7 @@ h2{color:#0b56a8;}
           </div>
           <div class="product-listing-content">
             <h5><a href="">{{$data->bikename}} </a></h5>
-            <p class="list-price">Price Per Day: ₱ {{$data->bikeprice}} Pesos  </p>
+            <p class="list-price">Price Per Day: ₱ {{$data->bikeprice}}  </p>
             <ul>
               <li><i class="fa fa-industry" aria-hidden="true"></i> {{$data->bikemodel}} Model</li>
              <li><i class="fa fa-bicycle" aria-hidden="true"> {{$data->biketype}}  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bike Type</i></li>
@@ -265,8 +313,8 @@ h2{color:#0b56a8;}
             <a href="../deletebike/{{$data->id}} " class="btn">Delete<span class="fa fa-trash"></span></a></div>
             </div>
             @empty
-                no data found
-                @endforelse
+               You have not Uploaded a Bike yet!.
+            @endforelse
          </div>
    
 </div>
@@ -299,7 +347,15 @@ h2{color:#0b56a8;}
       <input placeholder="Bike name" type="text" name="bikename"  required autofocus>
     </fieldset>
     <fieldset>
-      <input placeholder="Bike Price Per Day" type="number" name="bikeprice"  required autofocus>
+    <select name="bikeprice" id="Location" required>
+    <option value="" disabled selected>Select Bike Price</option>
+    <option value="300">300 - min</option>
+    <option value="400">400</option>
+    <option value="500">500</option>
+    <option value="600">600</option>
+    <option value="700">700</option>
+    <option value="800">800 - max</option>
+    </select>
     </fieldset>
     <fieldset>
       <input placeholder="Bike Model" type="number" name="bikemodel"  required autofocus>
@@ -365,50 +421,51 @@ h2{color:#0b56a8;}
   <div class="m-4">
     <div class="table-responsive"> 
     <table id="rentals"  class="table">
-            <thead>
+            <thead >
                 <tr>
-                    
-                <th>Bike name</th>
-                <th>Owner Name</th>
-                <th>Pickup Date</th>
-                <th>Return Date</th>
-                <th>Total Paid</th>
-                <th>Time</th>
-                <th>Actions</th>
+                <th class="text-center">Bike name</th>
+                <th class="text-center">Owner Name</th>
+                <th class="text-center">Pickup Date</th>
+                <th class="text-center">Return Date</th>
+                <th class="text-center">Total Paid</th>
+                <th class="text-center">Confirmation</th>
+                <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-
           <tr>
                 @forelse ($rental as $key=>$data)
-            
-                  <td>{{$data->bikename}}</td>
-                  <td>{{$data->fname}}&nbsp;{{$data->lname}}</td>
-                  <td ><label id="pickupdate" >
-                  {!! date('d-m-Y H:i:s', strtotime($data->rent_start_date)) !!}
-                  </label> 
+                  <td class="text-center">{{$data->bikename}}</td>
+                  <td class="text-center">{{$data->fname}}&nbsp;{{$data->lname}} </td>
+                  <td> {!! date('M-d-Y h:i:s', strtotime($data->rent_start_date)) !!} </td>
+                  <td> {!! date('M-d-Y h:i:s', strtotime($data->rent_end_date)) !!}</td>
+                  <td class="text-center">₱{{$data->total_amount}}</td>
+                  <td class="text-center">
+                  @forelse($confirm as $key=>$conf)
+                  @if($conf->returned_status === 1 && $data->payment_id == $conf->payment_id)
+                  <span class="badge badge-warning"style="background-color:#01ff24;">Confirmed</span>
+                  @elseif($conf->returned_status === Null && $data->payment_id == $conf->payment_id)
+                  <span class="badge badge-warning"style="background-color:#01ff24;">Standy</span>
+                  asdasd
+                  @endif
+                @empty
+                  @endforelse
                 </td>
-                  <td><label id="returndate" >
-                  {!! date('d-m-Y H:i:s', strtotime($data->rent_end_date)) !!}
-                  </label>
-                  </td>
-                  <td>{{$data->total_amount}}</td>
-                <td>
-                <div id="demo{{($data->rental_id)}}">
-                      
-           
-
-                </td>
-           
-                <td>
-                <div class="btn-group" role="group" aria-label="Button group example">
+                
+  	              
+                 
+        
+               
                   
-                  <button class="btn-xs btn-info"  type="button" id="rent{{$data->rental_id}}">
+    
+            <td>
+            @if($data->rstatus == '0')
+            <div style="margin:15px">
+                  <button class="btn-sm btn-info"  type="button" id="rent{{$data->payment_id}}">
                   Return</button>
-                  &nbsp;
-                  <button class="btn-xs btn-success"  type="button" data-toggle="modal" data-target="#Extend">
-                  Extend</button>
-                </div>
+                <div>
+                    @endif
+</td>
                 <!-- Return MODAL -->
                 <!-- Return MODAL-->
                 <!-- Return MODAL-->
@@ -416,64 +473,39 @@ h2{color:#0b56a8;}
                   <div class="modal-dialog modal-xs" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                      
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                    
                       <div class="modal-body">
                       <div class="form-group">
-                    
-                      <label for="comment">Report Issues:</label>
-                      <textarea class="form-control" rows="5" id="issues" name="issues"></textarea>
+                      <label for="issue">Report Issues:</label>
+                      <textarea class="form-control" rows="3" id="issues" name="issues"></textarea>
+                      <label for="meetup">Meet Up Location :</label>
+                      <input class="form-control" type="text" id="meetup" /></input>
                       </div>
-                      <input type="hidden" id="rental_id" />
-
+                      <input class="form-control" type="hidden" id="owner_id" name="owner_id" value ="{{$data->user_id}}"/>
+                      <input class="form-control" type="hidden" id="fname" name="fname" value ="{{ Auth::user()->fname }}"/>
+                      <input class="form-control" type="hidden" id="lname" name="lname" value ="{{ Auth::user()->lname }}"/>
+                      
+                      <input type="hidden" id="payment_id" />
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id = "submit-return">Return</button>
-                        
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <!-- Extend MODAL -->
-                <!-- Extend MODAL -->
-                <!-- Extend MODAL -->
-                <div class="modal fade" id="Extend" tabindex="-1" role="dialog" aria-labelledby="Extend" aria-hidden="true">
-                  <div class="modal-dialog modal-xs" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                      <h5 class="modal-title" id="Extend">Extend Form</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      
-                      <div class="modal-body">
-                      <input type="text" class="form-control" placeholder="Username" />
-                      <input type="text" class="form-control" placeholder="Username" />
-                      <input type="text" class="form-control" placeholder="Username" />
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Extend</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </td>
+              
             </tr>
             @empty
-            no data found
             @endforelse
 
 
             </tbody>
         </table>
     </div> 
-    <p class="mt-4"><strong>Note:</strong> Change the editor layout/orientation to see how responsive table works.</p>
+    <p class="mt-4"><strong>Note:</strong> This table contains Customer Rental history.</p>
   </div>
 </div>
 
@@ -492,11 +524,45 @@ h2{color:#0b56a8;}
  <!--MAPS  -->
   <div class="tab-pane text-style" id="tab5">
   <h2>Maps</h2>
-  <p>
-  
-  </p>
-    <hr>
+  <div class="container1">
+  <div id="map"></div>
   </div>
+  </div>
+  <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlIYYXEaZzs-6M9rSRgs-pGXlS0Mk9b64&callback=initMap&v=weekly"
+      async
+    ></script>
+<script type="text/javascript">
+    let map;
+    function initMap() {
+      var mapDiv = document.getElementById("map");
+      var latlng = new google.maps.LatLng(8.477217, 124.645920);
+
+      
+    var options = {
+        center: latlng,
+        zoom:8, 
+        scrollwheel: false,
+      
+        mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+        mapTypeIds: ["roadmap", "satellite"],
+      },
+      
+       
+        
+}
+    var map = new google.maps.Map(mapDiv, options);
+    var marker = new google.maps.Marker({
+      position: latlng,
+      map: map,
+      title: 'This is Me'
+
+
+    });
+    }
+    
+  </script>
   <!--END MAPS-->
  <!--END MAPS  -->
  <!--END MAPS  -->
@@ -512,29 +578,64 @@ h2{color:#0b56a8;}
   <h2>Returned Bikes</h2>
   <div class="m-4">
     <div class="table-responsive"> 
-        <table class="table">
+        <table id="return" class ="tabler" >
             <thead>
                 <tr>
                     <th>Bike name</th>
                     <th>Renter Name</th>
                     <th>Issues</th>
-                   
+                    <th>MeetUp Location</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+            @forelse ($return as $key=>$returned)
                 <tr>
-                    <td>Clark</td>
-                    <td>Kent</td>
-                    <td>clarkkent@mail.com</td>
-                    
+                    <td style = "text-align:center;">{{($returned->bikename)}}</td>
+                    <td style = "text-align:center;">{{($returned->rentername)}} {{($returned->renterlname)}}</td>
+                    <td style = "text-align:center;">{{($returned->issues)}}</td>
+                    <td style = "text-align:center;">{{($returned->meetup)}}</td>
+                    <td style = "text-align:center;">
+                    <div style="margin:15px">
+                      <button class="btn-sm btn-info"  type="button" id="returned{{($returned->returned_id)}}">Confirm</button>
+                    <div>
+                    </td>
+
+
+                    <!--CONFIRM MODAL -->
+<div class="modal fade" id="Confirm" tabindex="-1" role="dialog" aria-labelledby="Confirm" aria-hidden="true">
+                  <div class="modal-dialog modal-xs"style="width:350px; text-align:center;" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        Please confirm that your bike has returned
+                      </div>
+                      <div class="modal-body" >
+                      <div class="form-group">
+                      <input type="hidden" class="form-control" rows="5" id="returned_status" name="returned_status" value="{{($returned->returned_status)}}">
+                      <input type="hidden" name = "returned_id" id="returned_id" value ="{{($returned->returned_id)}}"/>
+                      <input type="hidden" name = "bike_id" id="bike_id" value ="{{($returned->id)}}"/>
+                      <button type="button" class="btn btn-primary btn-xs" id ="confirm-return">Confirm</button>
+                      &nbsp;
+                      <button type="button" class="btn btn-primary btn-xs"  data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+
                 </tr>
-                
+                @empty
+                @endforelse
+
             </tbody>
         </table>
     </div> 
     <p class="mt-4"><strong>Note:</strong> This table contain returned bike from customer.</p>
 </div>
   </div>
+
+
+
+
+
   <!--END Returned-->
  <!--END Returned  -->
  <!--END Returned  -->
@@ -551,7 +652,7 @@ h2{color:#0b56a8;}
   <h2>Earnigs</h2>
   <div class="m-4">
     <div class="table-responsive"> 
-        <table class="table">
+        <table  id =earnings class="tablee">
             <thead>
                 <tr>
                     
@@ -560,11 +661,15 @@ h2{color:#0b56a8;}
                 </tr>
             </thead>
             <tbody>
-              
+            @forelse ($earnings as $key=>$earn)
                 <tr>
-                    <td>Parker</td>
-                    <td>peterparker@mail.com</td>
+                    <td> {!! date('M-d-Y ', strtotime($earn->rent_start_date)) !!} <span> to </span> {!! date('M-d-Y ', strtotime($earn->rent_end_date)) !!} </td>
+                    <td>₱ {{($earn->sub_total)}}</td>
                 </tr>
+                @empty
+              
+                @endforelse
+
             </tbody>
         </table>
     </div> 
@@ -612,7 +717,7 @@ id="user_id"
       let city =  $('#city').val()
         
           const data = new FormData()
-          data.append('fname',fname)
+           data.append('fname',fname)
            data.append('lname',lname)
            data.append('email',email)
            data.append('number',number)
@@ -655,7 +760,6 @@ id="user_id"
 		    }else{
           $('#img').val('uploads/'+log)
         }
-	    
 		});
 		function readURL(input) {
 		    if (input.files && input.files[0]) {
@@ -664,7 +768,6 @@ id="user_id"
 		        reader.onload = function (e) {
 		            $('#img-upload').attr('src', e.target.result);
 		        }
-		        
 		        reader.readAsDataURL(input.files[0]);
 		    }
 		}
@@ -674,13 +777,13 @@ id="user_id"
 	});
   </script>
    
-
+<!-- MY RENTAL TABLE-->
+<!-- MY RENTAL TABLE-->
+<!-- MY RENTAL TABLE-->
 <script>
  $(document).ready(function() {
         $('#rentals').DataTable(
-            
-            {  
-                 
+            {      
           "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
             "iDisplayLength": 5,
             "lengthChange": false,
@@ -689,95 +792,60 @@ id="user_id"
           } 
             );
     } );
-
-
-      function checkAll(bx) {
-        var cbs = document.getElementsByTagName('input');
-        for(var i=0; i < cbs.length; i++) {
-          if(cbs[i].type == 'checkbox') {
-            cbs[i].checked = bx.checked;
-          }
-        }
-      }
-  
 </script>
-<!--
+<!-- RETURN TABLE-->
+<!-- RETURN TABLE-->
+<!-- RETURN TABLE-->
 <script>
-function makeTimer() {
+$(document).ready(function() {
+        $('#return').DataTable(
+            {    
+          "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+            "iDisplayLength": 5,
+            "lengthChange": false,
+            "info": false,
+            "pagingType": "numbers",
+          } 
+            );
+    } );
+  </script>
+<!-- EARNINGS SCRIPT-->
+<!-- EARNINGS SCRIPT-->
+<!-- EARNINGS SCRIPT-->
+<script>
+$(document).ready(function() {
+        $('#earnings').DataTable(
+            {     
+          "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+            "iDisplayLength": 5,
+            "lengthChange": false,
+            "info": false,
+            "pagingType": "numbers",
+          } 
+            );
+    } );
+  </script>
 
-//		var endTime = new Date("29 April 2018 9:56:00 GMT+01:00");	
-  var endTime = new Date("29 April 2022 9:56:00 GMT+01:00");			
-    endTime = (Date.parse(endTime) / 1000);
-
-    var now = new Date();
-    now = (Date.parse(now) / 1000);
-
-    var timeLeft = endTime - now;
-
-    var days = Math.floor(timeLeft / 86400); 
-    var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
-    var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600 )) / 60);
-    var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
-
-    if (hours < "10") { hours = "0" + hours; }
-    if (minutes < "10") { minutes = "0" + minutes; }
-    if (seconds < "10") { seconds = "0" + seconds; }
-
-    $("#days").html(days + "<span>D </span>");
-    $("#hours").html(hours + "<span>H </span>");
-    $("#minutes").html(minutes + "<span>M </span>");
-    $("#seconds").html(seconds + "<span>S</span>");		
-
-}
-
-setInterval(function() { makeTimer(); }, 1000);
-</script> -->
-
-
- 
-
+<!-- RENTAL RETURN SCRIPT-->
+<!-- RENTAL RETURN SCRIPT-->
+ <!-- RENTAL RETURN SCRIPT-->
 <script> 
 @foreach($rental as $key=>$data)
-  $('#rent{{$data->rental_id}}').click(function(){
-    $('#rental_id').val('{{$data->rental_id}}')
+  $('#rent{{$data->payment_id}}').click(function(){
+    $('#payment_id').val('{{$data->payment_id}}')
    $('#Return').modal('toggle')
   })
 @endforeach
-
- /*//var end = new Array[('')];
-
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get today's date and time
-
-
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
-
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  // Display the result in the element with id="demo"
-
-  + minutes + "m " + seconds + "s ";
-
-  // If the count down is finished, write some text
-  if (distance < 0) {
-    clearInterval(x);
-
-  }
-}, 1000);*/
-
 $('#submit-return').click(function(){
   let formdata = new FormData()
-  formdata.append('rental_id',$('#rental_id').val())
+  formdata.append('payment_id',$('#payment_id').val())
   formdata.append('issues',$('#issues').val())
+  formdata.append('meetup',$('#meetup').val())
   formdata.append('user_id',$('#user_id').val())
+  formdata.append('owner_id',$('#owner_id').val())
+  formdata.append('fname',$('#lname').val())
+  formdata.append('lname',$('#lname').val())
+
   axios.post(url+'/submit-return',formdata).then(res =>{
     console.log(res)
     if(res.status === 200)
@@ -787,13 +855,52 @@ $('#submit-return').click(function(){
                 res.data.message,
   
                 )
-      $('#rent'+res.data.data.id).hide() 
-         
-
+      $('#rent'+res.data.data.id).hide()
     }
   })
 })
 </script>  
+<!-- END RENTAL RETURN SCRIPT-->
+<!-- END RENTAL RETURN SCRIPT-->
+ <!--END RENTAL RETURN SCRIPT-->
 
+ <!-- CONFIRMATION  RETURN SCRIPT-->
+<!-- CONFIRMATION  RETURN SCRIPT-->
+<!-- CONFIRMATION  RETURN SCRIPT-->
+
+<script> 
+@foreach($return as $key=>$returned)
+$('#returned{{$returned->returned_id}}').click(function(){
+    $('#returned_id').val('{{$returned->returned_id}}')
+
+   $('#Confirm').modal('toggle')
+  })
+@endforeach
+$('#confirm-return').click(function(){
+  $('#returned').prop('disabled',true)
+      let returned_status =  $('#returned_status').val()
+      let returned_id =  $('#returned_id').val()
+      let bike_id =  $('#bike_id').val()
+      
+      const formdata = new FormData()
+      formdata.append('returned_status',returned_status)
+      formdata.append('returned_id',returned_id)
+      formdata.append('bike_id',bike_id)
+  axios.post(url+'/confirm-return',formdata).then(res =>{
+    console.log(res)
+    
+    if(res.status === 200)
+    {
+      $('#Confirm').modal('toggle')
+      Swal.fire(
+                res.data.message,
+  
+                )
+      $('#returned'+res.data.data.id).hide()
+      $('#returned').prop('disabled',false)
+    }
+  })
+})
+</script>  
 
 @endsection
