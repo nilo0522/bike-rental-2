@@ -17,5 +17,8 @@ class Payment extends Model
         'rental_id',
         'payment_type',
         'paid_by',
-        'transfee',];
+        'transfee',
+        'remarks',
+        'rstatus',
+    ];
 }

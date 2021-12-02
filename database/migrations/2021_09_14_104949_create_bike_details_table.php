@@ -25,6 +25,7 @@ class CreateBikeDetailsTable extends Migration
             $table->string('personnumber');
             $table->string('bikepic');
             $table->string('location');
+            $table->integer('bikestatus');
             $table->timestamps();
 
 

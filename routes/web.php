@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\BikeDetailController;
@@ -26,23 +25,15 @@ use Illuminate\Http\Request;
 |
 */
 
-
-
 	Route::get('/', function () {
 		return view('frontpage');
 	});
 	
 
-	Auth::routes();
-	Route::get('about-us', function () {
-		return view('user.about-us');
-	});
-
-	Route::get('contact', function () {
-		return view('user.contact');
-	});
 	
 	Route::get('dashboard',[HomeControllerV2::class,'index']);
+	
+	
 	
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
@@ -51,6 +42,9 @@ use Illuminate\Http\Request;
 
  Auth::routes(['verify'=>true]);
  //EMAIL VERIFICATION
+
+ Route::get('about-us',[HomeController::class,'aboutus']);
+ Route::get('contact',[HomeController::class,'contactus']);
 Route::get('user/home',function(){
 	return view('auth/login');
 })->middleware(['auth','verified'])->name('user/home');
@@ -83,6 +77,8 @@ Route::get('booking/{bike_details}',[BookingController::class, 'booking']);
 
 //KAILANGAN I CHANGE ANG ROUTE BOOKING FORM to PAYMENT PAGE
 Route::get('checkout',[CheckoutController::class, 'checkout'])->name('checkout');
+
+
 Route::post('checkout',[CheckoutController::class, 'afterpayment'])->name('checkout.credit-card');
 
 //USER PROFILE
@@ -98,6 +94,8 @@ Route::get('admin/bikes',[AdminController::class,'bikes'])->name('bikes');
 Route::get('admin/edit',[AdminController::class,'profile'])->name('profile');
 Route::get('admin/payments',[AdminController::class,'payments'])->name('payments');
 Route::get('admin/rentals',[AdminController::class,'rentals'])->name('rentals');
+Route::get('admin/return',[AdminController::class,'return'])->name('return');
+Route::get('admin/extend',[AdminController::class,'extend'])->name('extend');
 Route::get('admin/map',[AdminController::class,'maps'])->name('maps');
 Route::get('admin/edituser',[AdminController::class,'edituser'])->name('edituser');
 //Route::get('viewbike/{viewwbike}',[BikeDetailController::class,'view']);
@@ -107,5 +105,5 @@ Route::get('admin/edituser',[AdminController::class,'edituser'])->name('edituser
 //Route::get('editprofile',[ProfileController::class,'update'])->name('profileedit')->middleware('auth');
 
 //==========================================BIKES=============================================
-
-
+Route::post('approval',[AdminController::class, 'approval'])->name('approval');
+Route::post('disable',[AdminController::class, 'disable'])->name('disable');

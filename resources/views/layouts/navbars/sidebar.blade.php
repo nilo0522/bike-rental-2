@@ -33,16 +33,28 @@
       </li>
 
 
-      <li class="nav-item{{ $activePage == 'payments' ? ' active' : '' }}">
+      <li class="nav-item{{ $activePage == 'rentals' ? ' active' : '' }}">
         <a class="nav-link" href="{{route('payments')}}">
         <i class="material-icons">money</i>
+            <p>Rental Fees</p>
+        </a>
+      </li>
+      <li class="nav-item{{ $activePage == 'payments' ? ' active' : '' }}">
+        <a class="nav-link" href="{{route('rentals')}}">
+        <i class="material-icons">booking</i>
             <p>Payments</p>
         </a>
       </li>
-      <li class="nav-item{{ $activePage == 'rentals' ? ' active' : '' }}">
-        <a class="nav-link" href="{{route('rentals')}}">
-        <i class="material-icons">booking</i>
-            <p>Rentals</p>
+      <li class="nav-item{{ $activePage == 'return' ? ' active' : '' }}">
+        <a class="nav-link" href="{{route('return')}}">
+        <i class="material-icons"> assignment_return </i>
+            <p>Returned Bikes</p>
+        </a>
+      </li>
+      <li class="nav-item{{ $activePage == 'extend' ? ' active' : '' }}">
+        <a class="nav-link" href="{{route('extend')}}">
+        <i class="material-icons">extension</i>
+            <p>Extended Bikes</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'map' ? ' active' : '' }}">

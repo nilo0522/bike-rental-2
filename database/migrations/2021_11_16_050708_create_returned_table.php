@@ -17,10 +17,13 @@ class CreateReturnedTable extends Migration
             $table->id('returned_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('rental_id');
-            $table->foreign('rental_id')->references('rental_id')->on('rentals');
-            $table->integer('returned_status');
+            $table->unsignedBigInteger('payment_id');
+            $table->foreign('payment_id')->references('payment_id')->on('payments');
+            $table->integer('returned_status')->default(1);
             $table->string('issues');
+            $table->string('meetup');
+            
+            
             $table->timestamps();
         });
     }

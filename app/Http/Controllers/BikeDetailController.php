@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\BikeDetail;
+use App\Models\Rental;
 use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class BikeDetailController extends Controller
 {
@@ -20,7 +22,8 @@ class BikeDetailController extends Controller
         //
         
         $bike_detail = BikeDetail::all();
-        return view('user.bike-listing',compact ('bike_detail'));
+        $user = User::find(1);
+        return view('user.bike-listing',compact ('bike_detail','user'));
      
     }
 
@@ -30,8 +33,8 @@ class BikeDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('user.uploadbike');
+    {   $user = User::find(1);
+        return view('user.uploadbike',compact('user'));
     }
 
     /**
@@ -70,12 +73,13 @@ class BikeDetailController extends Controller
                 'personnumber'=> $request->get('personnumber'),
                 'biketype'=> $request->get('biketype'),
                 'location'=> $request->get('location'),
+                'bikestatus'=> 0,
                 "bikepic" => $name,
 
             ]);
 
             $BikeDetail->save();
-        
+            $user = User::find(1);
             return redirect(url('../home'));
         }
 
@@ -92,10 +96,16 @@ class BikeDetailController extends Controller
      //PARA DISPLAY
     public function show($id)
     {
-    $BikeDetail = BikeDetail::select('*')
-    ->where('id', '=', $id)
+
+    $BikeDetail = BikeDetail::find($id);
+    $user = User::find(Auth::user()->id);
+    $owner = BikeDetail::select('bike_details.*','users.*')
+    ->leftjoin('users','bike_details.user_id','=','users.id')
+    ->where('bike_details.id', '=', $id)
     ->get();
-    return view('user/bikedetail',compact('BikeDetail'));
+    $rental = Rental::where('bike_id',$id)->get();
+  
+    return view('user/bikedetail',compact('BikeDetail','user','owner','rental'));
     }
     
 
@@ -108,11 +118,11 @@ class BikeDetailController extends Controller
      */
     public function edit($user_id)
     {
-        
+        $user = User::find(1);
         $BikeDetail = BikeDetail::select('*')
         ->where('id', '=', $user_id)
         ->get();
-        return view('user/editbike',compact('BikeDetail'));
+        return view('user/editbike',compact('BikeDetail','user'));
    // return view('editbike',compact('BikeDetail'));
 
     }
@@ -137,6 +147,7 @@ class BikeDetailController extends Controller
     
             ]);
             $bike_details->update($data);
+            $user = User::find(1);
             return redirect(url('../bike-listing'));
             
    
@@ -153,7 +164,8 @@ class BikeDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(BikeDetail $bike_details)
-    {
+    {   
+        $user = User::find(1);
         $bike_details->delete();
         return redirect(url('../home'));
     }
@@ -166,11 +178,11 @@ class BikeDetailController extends Controller
     public function userpost($bike_id)
     {
         
-
+    $user = User::find(1);
     $BikeDetail = BikeDetail::select('*')
     ->where('user_id', '=', $bike_id)
     ->get();
-    return view('user/myposts',compact('BikeDetail'));
+    return view('user/myposts',compact('BikeDetail','user'));
 
      
     }
