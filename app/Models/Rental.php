@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\BikeDetail;
 class Rental extends Model
 {
     use HasFactory;
@@ -27,5 +27,8 @@ class Rental extends Model
         'fullpayment',
     ];
 
-    
+    public function getBike()
+    {
+       return $this->hasOne(BikeDetail::class);
+    }
 }

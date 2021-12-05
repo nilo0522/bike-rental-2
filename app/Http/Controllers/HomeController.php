@@ -117,16 +117,16 @@ class HomeController extends Controller
 
 
     //RENTAL QUERY
-            $rental = Payment::select('payments.*','rentals.*','bike_details.*','users.*')
-            ->leftjoin('rentals', 'payments.rental_id', '=', 'rentals.rental_id')
+            $rental = Rental::select('rentals.*','bike_details.*','users.*')
+           // ->leftjoin('rentals', 'payments.rental_id', '=', 'rentals.rental_id')
             ->leftjoin('bike_details', 'rentals.bike_id', '=','bike_details.id')
             ->leftjoin('users', 'bike_details.user_id', '=', 'users.id')
             ->where('rentals.user_id','=',Auth::user()->id)
             ->get();
-
+     //return response()->json($rental);
     //BIKEQUERY
 
-
+//return $rental;
         $BikeDetail = BikeDetail::select('*')
         ->where('user_id', '=', $bike_id)
         ->get();
@@ -143,5 +143,8 @@ class HomeController extends Controller
         $user = User::find(1);
         return view('user.contact',compact('user'));
     }
-  
+  public function Extend($id)
+  {
+      return $id;
+  }
 }

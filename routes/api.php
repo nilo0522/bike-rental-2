@@ -6,6 +6,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ExtendController;
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,4 +36,4 @@ Route::post('confirm-return',[ProfileController::class,'Confirmreturn']);
 ////
 
 Route::post('pre-checkout',[CheckoutController::class, 'checkout'])->name('checkout');
-
+Route::get('extend/{id}',[ExtendController::class,'Extend']);
