@@ -114,7 +114,7 @@
             float: right;
             text-align: right;
         }
-        }
+        
 
         #rentals_paginate {
 
@@ -133,7 +133,7 @@
             float: right;
             text-align: right;
         }
-        }
+
 
         #return_paginate {
 
@@ -153,7 +153,7 @@
             float: right;
             text-align: right;
         }
-        }
+        
 
         #earnings_paginate {
 
@@ -161,27 +161,37 @@
             float: center;
             text-align: center;
         }
-
-
         .label {
             display: inline-flex;
             margin-bottom: .5rem;
             margin-top: .5rem;
         }
-
         #map {
             margin-top: 15px;
             margin-left: 65px;
             width: 925px;
             height: 550px;
         }
-
         body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
+        #book {
+            width: 100%;
+            white-space: nowrap;
+        }
 
+        #book_filter {
+            width: 50%;
+            float: right;
+            text-align: right;
+        }
+        #book_paginate {
+            width: 100%;
+            float: center;
+            text-align: center;
+        }
     </style>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
@@ -193,6 +203,7 @@
             <nav class="nav-sidebar">
                 <ul class="nav tabs">
                     <li class="active"><a href="#tab1" data-toggle="tab">Profile</a></li>
+                    <li class=""><a href="#tab8" data-toggle="tab">Booked Bikes</a></li>
                     <li class=""><a href="#tab2" data-toggle="tab">My Bikes</a></li>
                     <li class=""><a href="#tab3" data-toggle="tab">Upload Bikes</a></li>
                     <li class=""><a href="#tab4" data-toggle="tab">My Rentals</a></li>
@@ -215,26 +226,29 @@
                         <h2 style="margin-top: 5%">Your Profile</h2>
                         <div class="sidebar_widget" style="border:5px solid #337ab7">
                             <div class="form-group col-sm-12">
-                                <div id="profile-container" class="float-right">
-
-                                    <!-- KAILANGAN MUGANA PAG TUPLOKON -->
-
+                                <div id="profile-container text-center" class="profile-container">
                                     @php
-                                        $img = Auth::user()->prof_img ?: 'uploads/1.jpg';
+                                        $img = Auth::user()->prof_img ?: '';
                                     @endphp
-                                    <img id='img-upload' src='{{ asset($img) }}' />
-                                    <input type="hidden" value="{{ $img }}" id="img" />
+                                    @if($img==NULL)
+                                    <img id='img-upload' src='https://img.icons8.com/bubbles/100/000000/administrator-male.png' style="width:200px;height:180px; border-radius: 100%;" />
+                                    @else
+                                    <img id='img-upload' src='{{ asset($img) }}' style="width:200px;height:180px; border-radius: 100%;" />
+                                    @endif
+                                    <input type="hidden" value="{{ $img }}" id="img"style="width:200px;height:180px; border-radius: 100%;" />
+                                    </div>
+                                    <br>
+                                        <div class="input-group "style="margin-left:50px">
+                                            <span class="input-group-btn">
+                                                <label class="btn-sm btn-danger btn-file" style=" width:100px;height:25px">
+                                                    Change Picture
+                                                    <input type="file" id="imgInp" name="imgInp">
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                        <div class="btn" style="background-color: transparent;">
                                 </div>
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <label class="btn-sm btn-danger btn-file" style=" width:100px;height:25px">
-                                            Change Picture
-                                            <input type="file" id="imgInp" name="imgInp">
-                                        </label>
-                                    </span>
-
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <div class="col-sm-6">
                                     <label for="fname">First name</label>
@@ -295,9 +309,63 @@
                     </div>
                 </div>
             </div>
+        <!-- END PROFILE -->
+        <!-- END PROFILE -->
+        <!-- END PROFILE -->
+
+       <!-- BOOKED BIKES -->
+        <!--  BOOKED BIKES -->
+        <!--  BOOKED BIKES -->
+
+        <div class="tab-pane text-style" id="tab8">
 
 
+        <h2>Booked Bikes</h2>
+                <div class="m-4">
+                    <div class="table-responsive">
+                        <table id="book" class="tableb">
+                            <thead class="text-center">
+                                <tr >
+                                    <th>Bike Name</th>
+                                    <th>Renter Name</th>
+                                    <th>Pickup Date</th>
+                                    <th>Return Date</th>
+                                    <th>Total Paid</th>
+                                    <th>Mode of Payment</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody  class="text-center">
+                            
+                                    <tr>
+                                    @forelse ($booked as $key=>$data)
+                                        <td>{{ $data->bikename }} </td>
+                                        <td>{{ $data->rentername}} &nbsp; {{ $data->renterlname}} </td>
+                                        <td> {!! date('M-d-Y h:i:s', strtotime($data->rent_start_date)) !!}</td>
+                                        <td> {!! date('M-d-Y h:i:s', strtotime($data->rent_end_date)) !!}</td>
+                                        <td>₱{{ $data->sub_total }}</td>
+                                        <td>{{ $data->paid_by }} </td>
+                                        <td></td>
+                                        @empty
+                                    You Bike are not rented yet!.
+                                @endforelse
+                                    </tr>
+                             
 
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-4"><strong>Note:</strong>This table contain Owner's Booked Bikes Reports.</p>
+                </div>
+
+         </div>
+      <!--  END BOOKED BIKES -->
+        <!-- END BOOKED BIKES -->
+        <!-- END BOOKED BIKES -->
+
+        <!--  MY BIKES -->
+        <!--  MY BIKES -->
+        <!--  MY BIKES -->
             <div class="tab-pane text-style" id="tab2">
                 <h2>My Bikes</h2>
                 <p>
@@ -311,7 +379,7 @@
                                                 class="img-responsive" alt="Image" /> </a>
                                         </div>
                                         <div class="product-listing-content">
-                                            <h5><a href="">{{ $data->bikename }} </a></h5>
+                                            <h5><a href="../editbike/{{ $data->id }}">{{ $data->bikename }} </a></h5>
                                             <p class="list-price">Price Per Day: ₱ {{ $data->bikeprice }} </p>
                                             <ul>
                                                 <li><i class="fa fa-industry" aria-hidden="true"></i>
@@ -321,8 +389,7 @@
                                             </ul>
                                             <a href="../editbike/{{ $data->id }} " class="btn">Edit Details
                                                 <span class="fa fa-edit"></span></a>
-                                            <a href="../deletebike/{{ $data->id }} " class="btn">Delete<span
-                                                    class="fa fa-trash"></span></a>
+                                         
                                         </div>
                                     </div>
                                 @empty
@@ -750,9 +817,10 @@
                     data.message,
                     ' PROFILE UPDATED SUCCESFULLY',
                     'success',
+                  
                 )
-
-            })
+                location.reload();
+            },5000)
 
             $('#save_prof').prop('disabled', false)
         })
@@ -920,5 +988,18 @@
             })
         })
     </script>
-
+    <script>
+            $(document).ready(function() {
+                $('#book').DataTable({
+                    "aLengthMenu": [
+                        [5, 10, 25, -1],
+                        [5, 10, 25, "All"]
+                    ],
+                    "iDisplayLength": 5,
+                    "lengthChange": false,
+                    "info": false,
+                    "pagingType": "numbers",
+                });
+            });
+        </script>
 @endsection
