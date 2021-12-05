@@ -106,14 +106,14 @@
                                                 src="uploads/{{ $fkeys->bikepic }}" class="img-responsive"
                                                 alt="image"></a>
                                         <ul>
-                                            <li><i class="fa fa-cog" aria-hidden="true"></i>{{ $fkeys->type }}
+                                            <li><i class="fa fa-cog" aria-hidden="true"></i>{{ $fkeys->biketype }}
                                             </li>
                                             <li><i class="fa fa-industry" aria-hidden="true"></i>{{ $fkeys->bikemodel }}
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="car-title-m">
-                                        <h6><a href=" ">{{ $fkeys->bikename }}, {{ $fkeys->bikename }}</a></h6>
+                                        <h6><a href=" ">{{ $fkeys->bikename }}</a></h6>
                                         <span class="price">₱ {{ $fkeys->bikeprice }}/Day</span>
                                     </div>
                                     <div class="inventory_info_m">

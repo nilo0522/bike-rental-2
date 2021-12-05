@@ -118,13 +118,14 @@ class BikeDetailController extends Controller
      */
     public function edit($user_id)
     {
-        $user = User::find(1);
+        
         $BikeDetail = BikeDetail::select('*')
         ->where('id', '=', $user_id)
         ->get();
-        return view('user/editbike',compact('BikeDetail','user'));
+        return view('user/editbike',compact('BikeDetail'));
    // return view('editbike',compact('BikeDetail'));
 
+   
     }
 
     /**
@@ -134,21 +135,22 @@ class BikeDetailController extends Controller
      * @param  \App\Models\BikeDetail  $BikeDetail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BikeDetail $bike_details)
+    public function update(Request $request)
     {
 
-        $data=$request->validate([
-                'bikename'=>'required',
-                'bikeprice'=>'required',
-                'bikemodel'=>'required',
-                'address'=>'required',
-                'personnumber'=>'required',
-                'location'=>'required',
-    
+            $data = BikeDetail::where('id', $request->bike_id)
+                ->update([
+                    'bikename' => $request->bikename,
+                    'bikeprice' => $request->bikeprice,
+                    'bikemodel' => $request->bikemodel,
+                    'address' => $request->address,
+                    'biketype' => $request->biketype,
+                    'personnumber' => $request->personnumber,
+                    'location' => $request->location,
             ]);
-            $bike_details->update($data);
-            $user = User::find(1);
-            return redirect(url('../bike-listing'));
+            
+        
+            return redirect('../home');
             
    
 

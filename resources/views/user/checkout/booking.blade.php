@@ -237,7 +237,9 @@
         // populate the array
         var rental = @json($rental);
         $.each(rental, function(key, value) {
-            for (var d = new Date(value.rent_start_date); d <= new Date(value.rent_end_date); d.setDate(d
+            let extDate = new Date(value.rent_end_date)
+            extDate.setDate(extDate.getDate()+1)
+            for (var d = new Date(value.rent_start_date); d <= extDate; d.setDate(d
                     .getDate() + 1)) {
                 dateRange.push($.datepicker.formatDate('yy-mm-dd', d));
                 ""

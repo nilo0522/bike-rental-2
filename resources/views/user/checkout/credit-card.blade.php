@@ -3,25 +3,24 @@
 @section('content')
 
     <style>
-        .center {
-            margin: auto;
-            width: 60%;
-            border: 3px solid #ff8c00;
-            padding: 10px;
-            background-color: #rgb(255 255 255 / 15%) !important;
-        }
+      
 
-        body {
-            background-color: #f6f9fb !important;
-        }
+.rounded {
+    border-radius: 1rem
+}
 
-        .text-small {
-            font-size: 0.9rem;
-        }
+.nav-pills .nav-link {
+    color: #555
+}
 
-        .rounded {
-            border-radius: 1rem;
-        }
+.nav-pills .nav-link.active {
+    color: white
+}
+
+input[type="radio"] {
+    margin-right: 5px
+}
+
 
     </style>
     @php
@@ -29,142 +28,129 @@
     @endphp
 
 
+  
+   
 
 
-    <!-- Font Awesome JS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
-    <!-- FOR DEMO PURPOSE -->
-
-    <div class="center">
-        <div class="container py-5">
-
+    
+    <body style="font-family: 'Open Sans', sans-serif;">
+        <div class="container">
+        <div class="centered title"><h1>Welcome to our checkout.</h1></div>
+     </div>
+     <hr class="featurette-divider"></hr>
+         <div class="container">
             <div class="row">
-                <div class="col-lg-7 mx-auto">
-                    <div class="bg-white rounded-lg shadow-sm p-5">
-                        <!-- Credit card form tabs -->
-                        <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
-                            <li class="nav-item">
-                                <a data-toggle="pill" href="#nav-tab-card" class="nav-link active rounded-pill">
-                                    <i class="fa fa-credit-card"></i>
-                                    Pay With Credit Card
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a data-toggle="pill" href="#nav-tab-bank" class="nav-link rounded-pill">
-                                    <i class="fa fa-bicycle"></i>
-                                    Lease Information
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- End -->
-                        <!-- Credit card form content -->
-                        <div class="tab-content">
-                            <!-- credit card info-->
-                            <div id="nav-tab-card" class="tab-pane fade show active">
-                                <p class="alert alert-success">Some text success or error</p>
-                                <form id="payment-form" action="{{ route('checkout.credit-card') }}" method="POST">
-                                    @csrf
-                                    <div class="form-group">
-
-                                        <label for="username">Full name (on the card)</label>
-                                        <input type="text" name="username" value="" readonly class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cardNumber">Card number</label>
-                                        <div class="form-group">
-                                            <div class="col-md-12"><label for="card-element">
-                                                    Enter your credit card information</label>
-                                            </div>
-                                        </div>
-                                        <div id="card-element">
-                                        </div>
-                                        <!-- A Stripe Element will be inserted here. -->
-
-                                        <!-- Used to display form errors. -->
-                                        <div id="card-errors" role="alert"></div>
-
-                                    </div>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text text-muted">
-                                            <i class="fa fa-cc-visa mx-1"></i>
-                                            <i class="fa fa-cc-amex mx-1"></i>
-                                            <i class="fa fa-cc-mastercard mx-1"></i>
-                                        </span>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <button type="submit" class="btn btn-primary btn-submit-fix" id="card-button"
+                <div class="col-sm-6">
+                <div class="tab-content">
+        <div id="stripe" class="tab-pane fade in active">
+          <form accept-charset="UTF-8" action="/" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="pk_bQQaTxnaZlzv4FnnuZ28LFHccVSaj" id="payment-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓" /><input name="_method" type="hidden" value="PUT" /><input name="authenticity_token" type="hidden" value="qLZ9cScer7ZxqulsUWazw4x3cSEzv899SP/7ThPCOV8=" /></div>
+            <br>
+          <div class='form-row'>
+              <div class='form-group required'>
+                <div class='error form-group hide'>
+                <div class='alert-danger alert'>
+                  Please correct the errors and try again.
+              
+              </div>
+              <br>
+              <br>
+              <br>
+              <br>
+            </div>
+                <label class='control-label'>Name on Card</label>
+                <input class='form-control' size='4' type='text' value="{{ Auth::user()->fname }} {{ Auth::user()->lname }}" readonly>
+              </div>
+                    
+            </div>
+            <div class='form-row'>
+              <div class='form-group card required'>
+              <div class="col-md-12"><label for="card-element">
+                Enter your credit card information</label>
+                  </div>
+                  <div id="card-element" size="20"></div>
+                  <div id="card-errors" role="alert"></div>
+              </div>
+            </div>
+             <div class='form-row'>
+              <div class='form-group card required'>
+                <label class='control-label'>Billing Address</label>
+                <input autocomplete='off' class='form-control' size='20' type='text'>
+              </div>
+            </div>
+            
+            <div class='form-row'>
+              <div class='form-group'>
+                         <label class='control-label'></label> 
+                         <button type="submit" class="btn btn-primary btn-submit-fix" id="card-button"
                                                 class="btn btn-dark" type="submit"
                                                 data-secret="{{ $intent }}">Confirm</button>
-                                        </div>
-                                    </div>
-
-                            </div>
-                            <!-- End -->
-                            <!-- KAILANGAN IPA thumanon ang CSS sa iamge result -->
-                            <!-- End -->
-                            <!-- End -->
-                            <!-- End -->
-                            <!-- End -->
-                            <!-- rental info -->
-                            @foreach ($latest as $bike)
-                                <div id="nav-tab-bank" class="tab-pane fade">
-                                    <h6>Bike rental details</h6>
-                                    <dl>
-                                        <dt><img class="img-responsive " style=" display: block;
-             width:300px;height:150px; margin-right:25px" src="../uploads/{{ $bike->bikepic }}" /></dt>
-                                        <dt>Bike name</dt>
-                                        <dd> {{ $bike->bikename }}</dd>
-                                        <input type="hidden" name="bike_id" id="bike_id" value="{{ $bike->id }}">
-                                    </dl>
-                                    <dl>
-                                        <dt>Bike Price</dt>
-                                        <dd><span>₱</span> {{ $bike->bikeprice }}</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>Total days</dt>
-                                        <dd>{{ $bike->rentdays }}</dd>
-                                    </dl>
-                                    <dl>
-                                        <dl>
-                                            <dt>Trasaction Fee</dt>
-                                            <dd><span>₱</span> {{ $transfee }}</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Total Amount</dt>
-                                            <dd><span>₱</span> {{ $bike->total_amount }}</dd>
-                                        </dl>
-                                        <input style="border:none transparent" type="hidden" id="rental_id" name="rental_id"
-                                            value="{{ $bike->rental_id }}" required>
-                                        <input style="border:none transparent" type="hidden" id="user_id" name="user_id"
-                                            value="{{ Auth::user()->id }}" required>
-                                        <input style="border:none transparent" type="hidden" id="payment_type"
-                                            name="payment_type" value="1" required>
-                                        <input style="border:none transparent" type="hidden" id="paid_by" name="paid_by"
-                                            value="card" required>
-                                        <input style="border:none transparent" type="hidden" id="remarks" name="remarks"
-                                            value="Ongoing" required>
-                                        <input style="border:none transparent" type="hidden" id="transfee" name="transfee"
-                                            value="{{ $transfee }}" required>
-                                        <p class="text-muted">Please Check if the Information is right if not you may
-                                            reset the <br><strong>Transaction Process</strong>.
-                                        </p>
-                                </div>
-                            @endforeach
-                            <!-- End -->
-                        </div>
-                        <!-- End -->
-                        </form>
-                    </div>
+              </form>    
+                
+              </div>
+            </div>    
+            
+              </div>
+              
+                <div id="paypal" class="tab-pane fade">
+                <form action="?" id="paypalForm" method="POST">
+                <div class="paypalResult"><!-- content will load here --></div>
+               <br>
+                <input type="hidden" id="action" value="paypal"></input>
+                <input type="hidden" id="token" value="token-supersecuretoken123123123"></input>
+               <a href="#paypal"><img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-large.png" alt="paypal" width="100%"></a>
+               <br><br><br>
+                  <button class='form-control btn btn-primary submit-button' type='submit'> Continue →</button>
+              </div>
+            </div>
+            
+            
+          
+        </div>   
+     
+        <div class="col-sm-6">
+           <label class='control-label'></label><!-- spacing -->
+        
+          <div class="alert alert-info"">Please choose your method of payment and hit continue. You will then be sent down to pay using your selected payment option.</div>
+       <br>
+         <div class="btn-group-vertical btn-block">
+             <a class="btn btn-default" style="text-align: left;" data-toggle="tab" href="#stripe">Stripe/Credit Card</a>
+          <a class="btn btn-default" style="text-align: left;" data-toggle="tab" href="#paypal">Gcash</a>
+          </div>
+          
+          <br><br><br>
+         
+         <div class="jumbotron jumbotron-flat">
+    <div class="center"><h2><i>BALANCE DUE:</i></h2></div>
+           <div class="paymentAmt">$100</div>
+           
+                 
+          
+        </div>
+        
+     
+          
+            <br><br><br>
+        </div>
+                    
+                    
+                    
                 </div>
+                
+                
+                
             </div>
         </div>
-    </div>
-    </div>
+        
+        
+        </form>
+        
+    </body>
+
+
+
+
+
     <script src="https://js.stripe.com/v3/"></script>
     <script>
         // Custom styling can be passed to options when creating an Element.
@@ -232,4 +218,9 @@
                 });
         });
     </script>
+    <script>
+        $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+        })
+        </script>
 @endsection

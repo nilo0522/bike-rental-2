@@ -71,7 +71,7 @@ Route::get('bikedetail/{bike_details}',[BikeDetailController::class,'show']);
 //Route::get('myposts/{bike_details}',[BikeDetailController::class,'userpost']);
 Route::get('editbike/{BikeDetail}',[BikeDetailController::class,'edit']);
 Route::get('deletebike/{bike_details}',[BikeDetailController::class,'destroy']);
-Route::get('updatebike/{bike_details}',[BikeDetailController::class,'update']);
+Route::get('updatebike',[BikeDetailController::class,'update'])->name('updatebikes');
 Route::get('booking/{bike_details}',[BookingController::class, 'booking']);
 
 

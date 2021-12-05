@@ -114,7 +114,7 @@
             float: right;
             text-align: right;
         }
-        }
+
 
         #rentals_paginate {
 
@@ -133,7 +133,7 @@
             float: right;
             text-align: right;
         }
-        }
+
 
         #return_paginate {
 
@@ -153,7 +153,7 @@
             float: right;
             text-align: right;
         }
-        }
+
 
         #earnings_paginate {
 
@@ -161,7 +161,6 @@
             float: center;
             text-align: center;
         }
-
 
         .label {
             display: inline-flex;
@@ -182,6 +181,23 @@
             padding: 0;
         }
 
+        #book {
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        #book_filter {
+            width: 50%;
+            float: right;
+            text-align: right;
+        }
+
+        #book_paginate {
+            width: 100%;
+            float: center;
+            text-align: center;
+        }
+
     </style>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
@@ -193,6 +209,7 @@
             <nav class="nav-sidebar">
                 <ul class="nav tabs">
                     <li class="active"><a href="#tab1" data-toggle="tab">Profile</a></li>
+                    <li class=""><a href="#tab8" data-toggle="tab">Booked Bikes</a></li>
                     <li class=""><a href="#tab2" data-toggle="tab">My Bikes</a></li>
                     <li class=""><a href="#tab3" data-toggle="tab">Upload Bikes</a></li>
                     <li class=""><a href="#tab4" data-toggle="tab">My Rentals</a></li>
@@ -215,25 +232,32 @@
                         <h2 style="margin-top: 5%">Your Profile</h2>
                         <div class="sidebar_widget" style="border:5px solid #337ab7">
                             <div class="form-group col-sm-12">
-                                <div id="profile-container" class="float-right">
-
-                                    <!-- KAILANGAN MUGANA PAG TUPLOKON -->
-
+                                <div id="profile-container text-center" class="profile-container">
                                     @php
-                                        $img = Auth::user()->prof_img ?: 'uploads/1.jpg';
+                                        $img = Auth::user()->prof_img ?: '';
                                     @endphp
-                                    <img id='img-upload' src='{{ asset($img) }}' />
-                                    <input type="hidden" value="{{ $img }}" id="img" />
+                                    @if ($img == null)
+                                        <img id='img-upload'
+                                            src='https://img.icons8.com/bubbles/100/000000/administrator-male.png'
+                                            style="width:200px;height:180px; border-radius: 100%;" />
+                                    @else
+                                        <img id='img-upload' src='{{ asset($img) }}'
+                                            style="width:200px;height:180px; border-radius: 100%;" />
+                                    @endif
+                                    <input type="hidden" value="{{ $img }}" id="img"
+                                        style="width:200px;height:180px; border-radius: 100%;" />
                                 </div>
-                                <div class="input-group">
+                                <br>
+                                <div class="input-group " style="margin-left:50px">
                                     <span class="input-group-btn">
                                         <label class="btn-sm btn-danger btn-file" style=" width:100px;height:25px">
                                             Change Picture
                                             <input type="file" id="imgInp" name="imgInp">
                                         </label>
                                     </span>
-
                                 </div>
+                            </div>
+                            <div class="btn" style="background-color: transparent;">
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6">
@@ -295,9 +319,63 @@
                     </div>
                 </div>
             </div>
+            <!-- END PROFILE -->
+            <!-- END PROFILE -->
+            <!-- END PROFILE -->
+
+            <!-- BOOKED BIKES -->
+            <!--  BOOKED BIKES -->
+            <!--  BOOKED BIKES -->
+
+            <div class="tab-pane text-style" id="tab8">
 
 
+                <h2>Booked Bikes</h2>
+                <div class="m-4">
+                    <div class="table-responsive">
+                        <table id="book" class="tableb">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>Bike Name</th>
+                                    <th>Renter Name</th>
+                                    <th>Pickup Date</th>
+                                    <th>Return Date</th>
+                                    <th>Total Paid</th>
+                                    <th>Mode of Payment</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
 
+                                <tr>
+                                    @forelse ($booked as $key=>$data)
+                                        <td>{{ $data->bikename }} </td>
+                                        <td>{{ $data->rentername }} &nbsp; {{ $data->renterlname }} </td>
+                                        <td> {!! date('M-d-Y h:i:s', strtotime($data->rent_start_date)) !!}</td>
+                                        <td> {!! date('M-d-Y h:i:s', strtotime($data->rent_end_date)) !!}</td>
+                                        <td>₱{{ $data->sub_total }}</td>
+                                        <td>{{ $data->paid_by }} </td>
+                                        <td></td>
+                                    @empty
+                                        You Bike are not rented yet!.
+                                    @endforelse
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-4"><strong>Note:</strong>This table contain Owner's Booked Bikes Reports.</p>
+                </div>
+
+            </div>
+            <!--  END BOOKED BIKES -->
+            <!-- END BOOKED BIKES -->
+            <!-- END BOOKED BIKES -->
+
+            <!--  MY BIKES -->
+            <!--  MY BIKES -->
+            <!--  MY BIKES -->
             <div class="tab-pane text-style" id="tab2">
                 <h2>My Bikes</h2>
                 <p>
@@ -311,7 +389,8 @@
                                                 class="img-responsive" alt="Image" /> </a>
                                         </div>
                                         <div class="product-listing-content">
-                                            <h5><a href="">{{ $data->bikename }} </a></h5>
+                                            <h5><a href="../editbike/{{ $data->id }}">{{ $data->bikename }} </a>
+                                            </h5>
                                             <p class="list-price">Price Per Day: ₱ {{ $data->bikeprice }} </p>
                                             <ul>
                                                 <li><i class="fa fa-industry" aria-hidden="true"></i>
@@ -321,8 +400,7 @@
                                             </ul>
                                             <a href="../editbike/{{ $data->id }} " class="btn">Edit Details
                                                 <span class="fa fa-edit"></span></a>
-                                            <a href="../deletebike/{{ $data->id }} " class="btn">Delete<span
-                                                    class="fa fa-trash"></span></a>
+
                                         </div>
                                     </div>
                                 @empty
@@ -447,8 +525,8 @@
                                     @forelse ($rental as $key=>$data)
                                         <td class="text-center">{{ $data->bikename }}</td>
                                         <td class="text-center">{{ $data->fname }}&nbsp;{{ $data->lname }} </td>
-                                        <td> {!! date('M-d-Y h:i:s', strtotime($data->rent_start_date)) !!} </td>
-                                        <td> {!! date('M-d-Y h:i:s', strtotime($data->rent_end_date)) !!}</td>
+                                        <td> {!! date('M-d-Y ', strtotime($data->rent_start_date)) !!} </td>
+                                        <td> {!! date('M-d-Y ', strtotime($data->rent_end_date)) !!}</td>
                                         <td class="text-center">₱{{ $data->total_amount }}</td>
                                         <td class="text-center">
                                             @forelse($confirm as $key=>$conf)
@@ -465,12 +543,35 @@
                                             @endforelse
                                         </td>
                                         <td>
-                                            @if ($data->rstatus == '0')
+                                            @if ($data->rent_status == '0')
                                                 <div style="margin:15px">
                                                     <button class="btn-sm btn-info" type="button"
                                                         id="rent{{ $data->payment_id }}">
                                                         Return</button>
-                                                    <div>
+                                                    @php
+                                                        
+                                                        $x = 0;
+                                                        
+                                                        foreach ($rental as $key => $date) {
+                                                           
+                                                            if ($data->bike_id == $date->bike_id) {
+                                                                
+                                                                $date_end = new \Carbon\Carbon($data->rent_end_date);
+                                                                $date_end->addDays(1)->format('Y-m-d');
+                                                                if($date->rent_start_date == $date_end->toDateString()) {
+                                                                    $x = 1;
+                                                                }
+                                                            }
+                                                        }
+                                                    @endphp
+
+                                                    @if (!$data->extend && $x == 0)
+
+                                                        <button class="btn-sm btn-primary" type="button"
+                                                            id="ext{{ $data->rental_id }}">
+                                                            Extend</button>
+                                                        <div>
+                                                    @endif
                                             @endif
                                         </td>
                                         <!-- Return MODAL -->
@@ -506,6 +607,29 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-primary"
                                                             id="submit-return">Return</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="extend{{ $data->rental_id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="Return" aria-hidden="true">
+                                            <div class="modal-dialog modal-xs" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        extend?
+
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn"
+                                                            style="background-color : #007bff"
+                                                            id="submit-extend{{ $data->rental_id }}">Yes</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -750,9 +874,10 @@
                     data.message,
                     ' PROFILE UPDATED SUCCESFULLY',
                     'success',
-                )
 
-            })
+                )
+                location.reload();
+            }, 5000)
 
             $('#save_prof').prop('disabled', false)
         })
@@ -855,6 +980,24 @@
             $('#payment_id').val('{{ $data->payment_id }}')
             $('#Return').modal('toggle')
             })
+            $('#ext{{ $data->rental_id }}').click(function(){
+            // $('#payment_id').val('{{ $data->payment_id }}')
+            $('#extend{{ $data->rental_id }}').modal('toggle')
+            })
+            $('#submit-extend{{ $data->rental_id }}').click(function() {
+            let id = '{{ $data->rental_id }}'
+        
+            axios.get(url + '/extend/' + id).then(res => {
+            if (res.data.success)
+            {
+            alert('success')
+            $('#ext'+id).hide();
+            $('ext'+id).modal('toggle')
+            }
+        
+        
+            })
+            })
         @endforeach
         $('#submit-return').click(function() {
             let formdata = new FormData()
@@ -919,6 +1062,20 @@
                 }
             })
         })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#book').DataTable({
+                "aLengthMenu": [
+                    [5, 10, 25, -1],
+                    [5, 10, 25, "All"]
+                ],
+                "iDisplayLength": 5,
+                "lengthChange": false,
+                "info": false,
+                "pagingType": "numbers",
+            });
+        });
     </script>
 
 @endsection

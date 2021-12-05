@@ -47,8 +47,7 @@
 
                                 <a href="../editbike/{{ $data->id }} " class="btn">Edit Details <span
                                         class="angle_arrow"><i class="far fa-edit"></i></span></a>
-                                <a href="../deletebike/{{ $data->id }} " class="btn">Delete<span
-                                        class="angle_arrow"><i class="far fa-trash-alt"></i></span></a>
+                            
                             </div>
                         </div>
 

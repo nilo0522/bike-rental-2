@@ -26,60 +26,37 @@
             text-align: center;
         }
 
-        .calendarList1 {
-            list-style: none;
-            width: 100%;
-            margin: 0;
-            padding: 0;
+        .ui-datepicker {
+            margin-left:15%;
+            height: 325px ;
+            width:70%;
+            font-size: 25px;
+        }
+        .ui-datepicker .ui-datepicker-title {
+    margin: 0 0.3em;
+    line-height: 1.8em;
+    text-align: center;
+        }
+        .ui-datepicker td.ui-state-disabled>span{
+            background: #808080;  
+        }
+        .ui-datepicker td.ui-state-disabled{
+            opacity:25;
+        }
+        .square {
             text-align: center;
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-template-rows: repeat(1, 40px);
-            align-items: center;
-            justify-items: center;
-            grid-gap: 12px;
-            font-size: 14px;
-            color: #2767b1;
-        }
-
-        .calendarList2 {
-            list-style: none;
-            margin: 0;
-            padding: 0;
+            height: 15px;
+            width: 15px;
+            background-color: #808080;
+            }
+            .white {
             text-align: center;
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-template-rows: repeat(6, 40px);
-            align-items: center;
-            justify-items: center;
-            grid-gap: 8px;
-            font-size: 14px;
-            color: #111921;
-        }
-
-        .calendarYearMonth {
-            margin-top: 24px;
-        }
-
-        .calendarYearMonth p {
-            display: inline-block;
-            vertical-align: middle;
-            font-size: 20px;
-        }
-
-        .calBtn {
-            user-select: none;
-            cursor: pointer;
-            background: white;
-            margin: 8px 0;
-            padding: 8px 10px;
-            border-radius: 12px;
-            font-size: 10px;
-            line-height: 22px;
-            color: #e6823c;
-            border: 3px solid #c75b5b;
-        }
-
+            height: 15px;
+            width: 15px;
+            border: 1px solid;
+            background-color: #ffff;
+            }
+         
     </style>
 
     <link rel="stylesheet" href="style.css" />
@@ -208,8 +185,13 @@
                                 <div role="tabpanel" class="tab-pane" id="book-sched">
 
 
-                                    <section class="text-primary " style="width: 100% !important">
-                                        <div id="calendar" class="text-primary" style="width: 100% !important">
+                                <div>Unavailable Dates</div>
+                                <div class="square center"></div>
+                                <div>Available Dates</div>
+                                <div class="white"></div>
+
+                                    <section class="text-primary  " >
+                                        <div id="calendar" class="text-primary" >
                                         </div>
                                     </section>
                                 </div>
@@ -251,108 +233,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js">
     </script>
 
-    <script>
-        const months = [{
-                'id': 1,
-                'name': 'Jan'
-            },
-            {
-                'id': 2,
-                'name': 'Feb'
-            },
-            {
-                'id': 3,
-                'name': 'Mar'
-            },
-            {
-                'id': 4,
-                'name': 'Apr'
-            },
-            {
-                'id': 5,
-                'name': 'May'
-            },
-            {
-                'id': 6,
-                'name': 'Jun'
-            },
-            {
-                'id': 7,
-                'name': 'Jul'
-            },
-            {
-                'id': 8,
-                'name': 'Aug'
-            },
-            {
-                'id': 9,
-                'name': 'Sep'
-            },
-            {
-                'id': 10,
-                'name': 'Oct'
-            },
-            {
-                'id': 11,
-                'name': 'Nov'
-            },
-            {
-                'id': 12,
-                'name': 'Dec'
-            },
-        ];
-        var currentYear = new Date().getFullYear();
-        var currentMonth = new Date().getMonth() + 1;
 
-        function letsCheck(year, month) {
-            var daysInMonth = new Date(year, month, 0).getDate();
-            var firstDay = new Date(year, month, 01).getUTCDay();
-            var array = {
-                daysInMonth: daysInMonth,
-                firstDay: firstDay
-            };
-            return array;
-        }
-
-        function makeCalendar(year, month) {
-            var getChek = letsCheck(year, month);
-            getChek.firstDay === 0 ? getChek.firstDay = 7 : getChek.firstDay;
-            $('#calendarList').empty();
-            for (let i = 1; i <= getChek.daysInMonth; i++) {
-                if (i === 1) {
-                    var div = '<li id="' + i + '" style="grid-column-start: ' + getChek.firstDay + ';">1</li>';
-                } else {
-                    var div = '<li id="' + i + '" >' + i + '</li>'
-                }
-                $('#calendarList').append(div);
-            }
-            monthName = months.find(x => x.id === month).name;
-            $('#yearMonth').text(year + ' ' + monthName);
-        }
-        makeCalendar(currentYear, currentMonth);
-
-        function nextMonth() {
-            currentMonth = currentMonth + 1;
-            if (currentMonth > 12) {
-                currentYear = currentYear + 1;
-                currentMonth = 1;
-            }
-            $('#calendarList').empty();
-            $('#yearMonth').text(currentYear + ' ' + currentMonth);
-            makeCalendar(currentYear, currentMonth);
-        }
-
-        function prevMonth() {
-            currentMonth = currentMonth - 1;
-            if (currentMonth < 1) {
-                currentYear = currentYear - 1;
-                currentMonth = 12;
-            }
-            $('#calendarList').empty();
-            $('#yearMonth').text(currentYear + ' ' + currentMonth);
-            makeCalendar(currentYear, currentMonth);
-        }
-    </script>
 
     <script>
         $("#Owndisable").click(function() {
@@ -364,12 +245,17 @@
             });
         });
     </script>
+
+
     <script>
         var dateRange = []; // array to hold the range
         // populate the array
         var rental = @json($rental);
         $.each(rental, function(key, value) {
-            for (var d = new Date(value.rent_start_date); d <= new Date(value.rent_end_date); d.setDate(d
+            let extDate = new Date(value.rent_end_date)
+               extDate.setDate(extDate.getDate()+1)
+               
+            for (var d = new Date(value.rent_start_date); d <= extDate ; d.setDate(d
                     .getDate() + 1)) {
                 dateRange.push($.datepicker.formatDate('yy-mm-dd', d));
                 ""
@@ -382,6 +268,7 @@
             return [dateRange.indexOf(string) == -1];
         }
         $('#calendar').datepicker({
+            
             dateFormat: 'yy-mm-dd',
             minDate: new Date(),
             beforeShowDay: disableDates
